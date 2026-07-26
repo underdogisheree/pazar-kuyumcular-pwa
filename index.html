@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    >
+
+    <meta name="theme-color" content="#111827">
+
+    <meta
+        name="description"
+        content=" canlı fiyat hesaplama uygulaması"
+    >
+
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
+
+    <title>Pazar Kuyumcular</title>
+</head>
+
+<body>
+
+    <main class="container">
+
+        <header class="header">
+            <h1>Pazar Kuyumcular</h1>
+            <p>Canlı Altın Fiyat Hesaplama</p>
+        </header>
+
+
+        <section class="status-card">
+
+            <div class="status-row">
+                <span>Bağlantı</span>
+
+                <span id="connectionStatus" class="status waiting">
+                    Bağlanıyor...
+                </span>
+            </div>
+
+            <div class="status-row">
+                <span>Son Güncelleme</span>
+
+                <span id="updateTime">
+                    -
+                </span>
+            </div>
+
+        </section>
+
+
+        <section class="has-altin-card">
+
+            <div class="has-title">
+                Has Altın Satış Fiyatı
+            </div>
+
+            <div id="hasAltinPrice" class="has-price">
+                -
+            </div>
+
+            <div class="currency">
+                TL
+            </div>
+
+        </section>
+
+
+        <section class="products">
+
+            <h2>Altın Fiyatları</h2>
+
+
+            <!-- 24 AYAR -->
+
+            <div class="product-card">
+
+                <h3>24 Ayar</h3>
+
+                <div class="price-row">
+                    <span>Satış Fiyatı</span>
+                    <strong id="ayar24Satis">-</strong>
+                </div>
+
+                <div class="price-row">
+                    <span>Bozuş Fiyatı</span>
+                    <strong id="ayar24Bozus">-</strong>
+                </div>
+
+            </div>
+
+
+            <!-- 22 AYAR -->
+
+            <div class="product-card">
+
+                <h3>22 Ayar</h3>
+
+                <div class="price-row">
+                    <span>Satış Fiyatı</span>
+                    <strong id="ayar22Satis">-</strong>
+                </div>
+
+                <div class="price-row">
+                    <span>Bozuş Fiyatı</span>
+                    <strong id="ayar22Bozus">-</strong>
+                </div>
+
+            </div>
+
+
+            <!-- ÇEYREK ZİYNET -->
+
+            <div class="product-card">
+
+                <h3>Çeyrek Ziynet</h3>
+
+                <div class="price-row">
+                    <span>Satış Fiyatı</span>
+                    <strong id="ceyrekZiynetSatis">-</strong>
+                </div>
+
+                <div class="price-row">
+                    <span>Bozuş Fiyatı</span>
+                    <strong id="ceyrekZiynetBozus">-</strong>
+                </div>
+
+            </div>
+
+
+            <!-- ÇEYREK CUMHURİYET -->
+
+            <div class="product-card">
+
+                <h3>Çeyrek Cumhuriyet</h3>
+
+                <div class="price-row">
+                    <span>Satış Fiyatı</span>
+                    <strong id="ceyrekCumhuriyetSatis">-</strong>
+                </div>
+
+                <div class="price-row">
+                    <span>Bozuş Fiyatı</span>
+                    <strong id="ceyrekCumhuriyetBozus">-</strong>
+                </div>
+
+            </div>
+
+
+            <!-- TAM ZİYNET -->
+
+            <div class="product-card">
+
+                <h3>Tam Ziynet</h3>
+
+                <div class="price-row">
+                    <span>Satış Fiyatı</span>
+                    <strong id="tamZiynetSatis">-</strong>
+                </div>
+
+                <div class="price-row">
+                    <span>Bozuş Fiyatı</span>
+                    <strong id="tamZiynetBozus">-</strong>
+                </div>
+
+            </div>
+
+
+            <!-- TAM CUMHURİYET -->
+
+            <div class="product-card">
+
+                <h3>Tam Cumhuriyet</h3>
+
+                <div class="price-row">
+                    <span>Satış Fiyatı</span>
+                    <strong id="tamCumhuriyetSatis">-</strong>
+                </div>
+
+                <div class="price-row">
+                    <span>Bozuş Fiyatı</span>
+                    <strong id="tamCumhuriyetBozus">-</strong>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <footer>
+            Canlı Fiyat Verisi
+        </footer>
+
+    </main>
+
+
+    <!-- Socket.IO -->
+
+    <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
+
+    <!-- Uygulama -->
+
+    <script src="app.js"></script>
+
+</body>
+</html>
