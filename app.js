@@ -73,12 +73,11 @@ const hasAltinPrice =
 
 function formatTL(value) {
 
-    return Number(value).toLocaleString(
-        "tr-TR",
-        {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-        }
+    const roundedValue =
+        Math.round(Number(value) / 10) * 10;
+
+    return roundedValue.toLocaleString(
+        "tr-TR"
     ) + " TL";
 
 }
