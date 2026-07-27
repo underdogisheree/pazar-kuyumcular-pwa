@@ -22,11 +22,11 @@ const katsayilar = {
 
     ayar24: {
         satis: 1.015,
-        bozus: 1.01
+        bozus: 0.995
     },
 
     ayar22: {
-        satis: 0.965,
+        satis: 0.970,
         bozus: 0.910
     },
 
@@ -37,17 +37,17 @@ const katsayilar = {
 
     ceyrekCumhuriyet: {
         satis: 1.71,
-        bozus: 1.61
+        bozus: 1.655
     },
 
     tamZiynet: {
-        satis: 6.59,
-        bozus: 6.36
+        satis: 6.63,
+        bozus: 6.37
     },
 
     tamCumhuriyet: {
-        satis: 6.78,
-        bozus: 6.60
+        satis: 6.80,
+        bozus: 6.61
     }
 
 };
@@ -106,11 +106,16 @@ function setPrice(id, value) {
 // =====================================================
 // HAS ALTIN ÜZERİNDEN FİYAT HESAPLAMA
 // =====================================================
+// SATIŞ fiyatları -> Has Altın SATIŞ fiyatı üzerinden
+// BOZUŞ fiyatları -> Has Altın BOZUŞ/ALIŞ fiyatı üzerinden
+// =====================================================
 
-function hesapla(hasAltinSatis) {
+function hesapla(hasAltinSatis, hasAltinBozus) {
 
 
+    // =================================================
     // 24 AYAR
+    // =================================================
 
     setPrice(
         "ayar24Satis",
@@ -120,12 +125,14 @@ function hesapla(hasAltinSatis) {
 
     setPrice(
         "ayar24Bozus",
-        hasAltinSatis *
+        hasAltinBozus *
         katsayilar.ayar24.bozus
     );
 
 
+    // =================================================
     // 22 AYAR
+    // =================================================
 
     setPrice(
         "ayar22Satis",
@@ -135,12 +142,14 @@ function hesapla(hasAltinSatis) {
 
     setPrice(
         "ayar22Bozus",
-        hasAltinSatis *
+        hasAltinBozus *
         katsayilar.ayar22.bozus
     );
 
 
+    // =================================================
     // ÇEYREK ZİYNET
+    // =================================================
 
     setPrice(
         "ceyrekZiynetSatis",
@@ -150,12 +159,14 @@ function hesapla(hasAltinSatis) {
 
     setPrice(
         "ceyrekZiynetBozus",
-        hasAltinSatis *
+        hasAltinBozus *
         katsayilar.ceyrekZiynet.bozus
     );
 
 
+    // =================================================
     // ÇEYREK CUMHURİYET
+    // =================================================
 
     setPrice(
         "ceyrekCumhuriyetSatis",
@@ -165,12 +176,14 @@ function hesapla(hasAltinSatis) {
 
     setPrice(
         "ceyrekCumhuriyetBozus",
-        hasAltinSatis *
+        hasAltinBozus *
         katsayilar.ceyrekCumhuriyet.bozus
     );
 
 
+    // =================================================
     // TAM ZİYNET
+    // =================================================
 
     setPrice(
         "tamZiynetSatis",
@@ -180,12 +193,14 @@ function hesapla(hasAltinSatis) {
 
     setPrice(
         "tamZiynetBozus",
-        hasAltinSatis *
+        hasAltinBozus *
         katsayilar.tamZiynet.bozus
     );
 
 
+    // =================================================
     // TAM CUMHURİYET
+    // =================================================
 
     setPrice(
         "tamCumhuriyetSatis",
@@ -195,7 +210,7 @@ function hesapla(hasAltinSatis) {
 
     setPrice(
         "tamCumhuriyetBozus",
-        hasAltinSatis *
+        hasAltinBozus *
         katsayilar.tamCumhuriyet.bozus
     );
 
@@ -248,25 +263,46 @@ socket.on("price_changed", (response) => {
     }
 
 
-    // ALTIN verisini al
+    // =================================================
+    // ALTIN VERİSİNİ AL
+    // =================================================
 
     const altin =
         response.data.ALTIN;
 
 
-    // Has altın SATIŞ fiyatı
+    // =================================================
+    // HAS ALTIN SATIŞ FİYATI
+    // =================================================
 
     const hasAltinSatis =
         Number(altin.satis);
 
 
+    // =================================================
+    // HAS ALTIN BOZUŞ FİYATI
+    // Harem Altın verisindeki "alis" alanını kullanıyoruz
+    // =================================================
+
+    const hasAltinBozus =
+        Number(altin.alis);
+
+
+    // =================================================
+    // FİYAT KONTROLÜ
+    // =================================================
+
     if (
-        !Number.isFinite(hasAltinSatis)
+        !Number.isFinite(hasAltinSatis) ||
+        !Number.isFinite(hasAltinBozus)
     ) {
 
         console.error(
             "Geçersiz has altın fiyatı:",
-            altin.satis
+            {
+                satis: altin.satis,
+                alis: altin.alis
+            }
         );
 
         return;
@@ -274,22 +310,29 @@ socket.on("price_changed", (response) => {
     }
 
 
-    // Has altın fiyatını göster
+    // =================================================
+    // HAS ALTIN SATIŞ FİYATINI GÖSTER
+    // =================================================
 
     hasAltinPrice.textContent =
         formatTL(hasAltinSatis);
 
 
-    // Son güncelleme
+    // =================================================
+    // SON GÜNCELLEME
+    // =================================================
 
     updateTime.textContent =
         altin.tarih || "-";
 
 
-    // 12 fiyatı hesapla
+    // =================================================
+    // 12 FİYATI HESAPLA
+    // =================================================
 
     hesapla(
-        hasAltinSatis
+        hasAltinSatis,
+        hasAltinBozus
     );
 
 });
@@ -332,6 +375,8 @@ socket.on("connect_error", (error) => {
         "status error";
 
 });
+
+
 // =====================================================
 // SERVICE WORKER
 // =====================================================
