@@ -68,7 +68,9 @@ const hasAltinPrice =
 
 
 // =====================================================
-// PARA FORMATLAMA
+// ÜRÜN FİYATLARINI FORMATLAMA
+// En yakın 10 TL'ye yuvarlar
+// Örnek: 6.272,75 TL → 6.270 TL
 // =====================================================
 
 function formatTL(value) {
@@ -78,6 +80,25 @@ function formatTL(value) {
 
     return roundedValue.toLocaleString(
         "tr-TR"
+    ) + " TL";
+
+}
+
+
+// =====================================================
+// HAS ALTIN FİYATINI FORMATLAMA
+// Has Altın olduğu gibi gösterilir
+// Örnek: 6.180,05 TL → 6.180,05 TL
+// =====================================================
+
+function formatHasAltinTL(value) {
+
+    return Number(value).toLocaleString(
+        "tr-TR",
+        {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }
     ) + " TL";
 
 }
@@ -104,12 +125,21 @@ function setPrice(id, value) {
 
 // =====================================================
 // HAS ALTIN ÜZERİNDEN FİYAT HESAPLAMA
-// =====================================================
-// SATIŞ fiyatları -> Has Altın SATIŞ fiyatı üzerinden
-// BOZUŞ fiyatları -> Has Altın BOZUŞ/ALIŞ fiyatı üzerinden
+//
+// SATIŞ:
+// Has Altın SATIŞ fiyatı üzerinden
+//
+// BOZUŞ:
+// Has Altın ALIŞ fiyatı üzerinden
+//
+// Hesaplama tam hassasiyetle yapılır.
+// Yuvarlama sadece ekranda gösterilir.
 // =====================================================
 
-function hesapla(hasAltinSatis, hasAltinBozus) {
+function hesapla(
+    hasAltinSatis,
+    hasAltinBozus
+) {
 
 
     // =================================================
@@ -247,6 +277,10 @@ socket.on("price_changed", (response) => {
     );
 
 
+    // =================================================
+    // VERİ KONTROLÜ
+    // =================================================
+
     if (
         !response ||
         !response.data ||
@@ -272,6 +306,7 @@ socket.on("price_changed", (response) => {
 
     // =================================================
     // HAS ALTIN SATIŞ FİYATI
+    // Harem Altın "satis" alanı
     // =================================================
 
     const hasAltinSatis =
@@ -280,7 +315,7 @@ socket.on("price_changed", (response) => {
 
     // =================================================
     // HAS ALTIN BOZUŞ FİYATI
-    // Harem Altın verisindeki "alis" alanını kullanıyoruz
+    // Harem Altın "alis" alanı
     // =================================================
 
     const hasAltinBozus =
@@ -311,10 +346,16 @@ socket.on("price_changed", (response) => {
 
     // =================================================
     // HAS ALTIN SATIŞ FİYATINI GÖSTER
+    //
+    // ÖNEMLİ:
+    // Burada yuvarlama yapılmaz.
+    // Gelen fiyat olduğu gibi gösterilir.
     // =================================================
 
     hasAltinPrice.textContent =
-        formatTL(hasAltinSatis);
+        formatHasAltinTL(
+            hasAltinSatis
+        );
 
 
     // =================================================
