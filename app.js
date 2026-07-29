@@ -262,9 +262,12 @@ function baslat() {
                 "FİYAT VERİSİ GELDİ:",
                 response
             );
-            console.log("HAREM DATA:", JSON.stringify(response.data, null, 2));
 
-
+             console.log(
+            "HAREM DATA:",
+            JSON.stringify(response.data, null, 2)
+        );
+            
             if (
                 !response ||
                 !response.data ||
