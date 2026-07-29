@@ -1,985 +1,600 @@
 /* =====================================================
-GENEL
+   GENEL
 ===================================================== */
 
-{
-box-sizing: border-box;
-margin: 0;
-padding: 0;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
-{
+:root {
+    --turuncu: #ef6c2f;
+    --turuncu-koyu: #d95720;
 
---turuncu:
-    #ef6c2f;
+    --krem: #fff0e5;
+    --krem-koyu: #f9dfce;
 
---turuncu-koyu:
-    #d95720;
+    --beyaz: #ffffff;
 
---krem:
-    #fff0e5;
+    --metin: #111111;
+    --gri: #666666;
 
---krem-koyu:
-    #f9dfce;
-
---beyaz:
-    #ffffff;
-
---metin:
-    #111111;
-
---gri:
-    #666666;
-
---kenarlik:
-    #e5b99d;
-
+    --kenarlik: #e5b99d;
 }
 
 html {
-min-height: 100%;
+    min-height: 100%;
 }
 
 body {
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
 
-font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Roboto,
-    Arial,
-    sans-serif;
+    background: #f7f3f0;
+    color: var(--metin);
 
-background:
-    #f7f3f0;
+    min-height: 100vh;
 
-color:
-    var(--metin);
-
-min-height:
-    100vh;
-
--webkit-font-smoothing:
-    antialiased;
-
+    -webkit-font-smoothing: antialiased;
 }
 
+
 /* =====================================================
-ANA CONTAINER
+   ANA CONTAINER
 ===================================================== */
 
 .container {
+    width: 100%;
+    max-width: 760px;
 
-width:
-    100%;
+    margin: 0 auto;
 
-max-width:
-    760px;
-
-margin:
-    0 auto;
-
-padding:
-    16px
-    14px
-    calc(
-        30px
-        +
-        env(
-            safe-area-inset-bottom
-        )
-    );
-
+    padding:
+        16px
+        14px
+        calc(
+            30px + env(safe-area-inset-bottom)
+        );
 }
 
+
 /* =====================================================
-HEADER
+   HEADER
 ===================================================== */
 
 .header {
-
-background:
-    var(--turuncu);
-
-color:
-    #000000;
-
-padding:
-    22px
-    20px
-    20px;
-
-border-radius:
-    18px
-    18px
-    0
-    0;
-
-text-align:
-    center;
-
-box-shadow:
-    0
-    5px
-    18px
-    rgba(
-        0,
-        0,
-        0,
-        0.10
-    );
-
-}
-
-.header h1 {
-
-font-size:
-    clamp(
-        26px,
-        6vw,
-        42px
-    );
-
-line-height:
-    1.1;
-
-font-weight:
-    900;
-
-letter-spacing:
-    0.5px;
-
-text-transform:
-    uppercase;
-
-}
-
-.header p {
-
-margin-top:
-    7px;
-
-font-size:
-    13px;
-
-font-weight:
-    700;
-
-letter-spacing:
-    1.5px;
-
-opacity:
-    0.75;
-
-}
-
-/* =====================================================
-HAS ALTIN
-===================================================== */
-
-.has-altin-card {
-
-background:
-    var(--beyaz);
-
-border-left:
-    5px solid
-    var(--turuncu);
-
-border-right:
-    5px solid
-    var(--turuncu);
-
-padding:
-    18px
-    16px;
-
-text-align:
-    center;
-
-box-shadow:
-    0
-    4px
-    16px
-    rgba(
-        0,
-        0,
-        0,
-        0.07
-    );
-
-}
-
-.has-altin-title {
-
-color:
-    var(--turuncu-koyu);
-
-font-size:
-    16px;
-
-font-weight:
-    900;
-
-letter-spacing:
-    1px;
-
-margin-bottom:
-    14px;
-
-}
-
-.has-altin-prices {
-
-display:
-    grid;
-
-grid-template-columns:
-    1fr
-    1fr;
-
-gap:
-    12px;
-
-}
-
-.has-price-box {
-
-background:
-    var(--krem);
-
-border:
-    1px solid
-    var(--kenarlik);
-
-border-radius:
-    12px;
-
-padding:
-    12px
-    8px;
-
-}
-
-.has-price-label {
-
-display:
-    block;
-
-color:
-    var(--gri);
-
-font-size:
-    12px;
-
-font-weight:
-    800;
-
-margin-bottom:
-    5px;
-
-}
-
-.has-price {
-
-display:
-    block;
-
-font-size:
-    clamp(
-        18px,
-        4.5vw,
-        25px
-    );
-
-font-weight:
-    900;
-
-white-space:
-    nowrap;
-
-}
-
-/* =====================================================
-ONS
-===================================================== */
-
-.ons-box {
-
-margin-top:
-    12px;
-
-background:
-    var(--krem);
-
-border:
-    1px solid
-    var(--kenarlik);
-
-border-radius:
-    12px;
-
-padding:
-    10px
-    8px;
-
-text-align:
-    center;
-
-}
-
-.ons-label {
-
-display:
-    block;
-
-color:
-    var(--gri);
-
-font-size:
-    12px;
-
-font-weight:
-    800;
-
-margin-bottom:
-    5px;
-
-}
-
-.ons-price {
-
-display:
-    block;
-
-font-size:
-    clamp(
-        18px,
-        4.5vw,
-        25px
-    );
-
-font-weight:
-    900;
-
-white-space:
-    nowrap;
-
-}
-
-/* =====================================================
-FİYAT TABLOSU
-===================================================== */
-
-.price-section {
-
-margin-top:
-    14px;
-
-border-radius:
-    16px;
-
-overflow:
-    hidden;
-
-background:
-    var(--beyaz);
-
-border:
-    1px solid
-    var(--kenarlik);
-
-box-shadow:
-    0
-    5px
-    18px
-    rgba(
-        0,
-        0,
-        0,
-        0.08
-    );
-
-}
-
-/* =====================================================
-TABLO BAŞLIĞI
-===================================================== */
-
-.table-header {
-
-display:
-    grid;
-
-grid-template-columns:
-    1.6fr
-    1fr
-    1fr;
-
-background:
-    var(--turuncu);
-
-color:
-    #000000;
-
-font-size:
-    16px;
-
-font-weight:
-    900;
-
-letter-spacing:
-    0.5px;
-
-text-align:
-    center;
-
-}
-
-.table-header div {
-
-padding:
-    15px
-    8px;
-
-}
-
-.table-header div {
-
-text-align:
-    left;
-
-padding-left:
-    16px;
-
-}
-
-/* =====================================================
-FİYAT SATIRLARI
-===================================================== */
-
-.price-row {
-
-display:
-    grid;
-
-grid-template-columns:
-    1.6fr
-    1fr
-    1fr;
-
-align-items:
-    center;
-
-min-height:
-    68px;
-
-border-top:
-    1px solid
-    var(--kenarlik);
-
-}
-
-/* =====================================================
-ALTERNATİF SATIR RENKLERİ
-===================================================== */
-
-.price-row(
-odd
-) {
-
-background:
-    var(--krem);
-
-}
-
-.price-row(
-even
-) {
-
-background:
-    var(--beyaz);
-
-}
-
-/* =====================================================
-ÜRÜN ADI
-===================================================== */
-
-.product-name {
-
-padding:
-    12px
-    10px
-    12px
-    16px;
-
-font-size:
-    clamp(
-        15px,
-        4vw,
-        21px
-    );
-
-font-weight:
-    900;
-
-text-transform:
-    uppercase;
-
-line-height:
-    1.2;
-
-}
-
-/* =====================================================
-FİYATLAR
-===================================================== */
-
-.buy-price,
-.sell-price {
-
-height:
-    100%;
-
-min-height:
-    68px;
-
-display:
-    flex;
-
-align-items:
-    center;
-
-justify-content:
-    center;
-
-padding:
-    8px;
-
-font-size:
-    clamp(
-        16px,
-        3.8vw,
-        21px
-    );
-
-font-weight:
-    900;
-
-white-space:
-    nowrap;
-
-}
-
-.buy-price {
-
-border-left:
-    1px solid
-    var(--kenarlik);
-
-}
-
-.sell-price {
-
-border-left:
-    1px solid
-    var(--kenarlik);
-
-}
-
-/* =====================================================
-DURUM KARTI
-===================================================== */
-
-.status-card {
-
-background:
-    var(--beyaz);
-
-margin-top:
-    14px;
-
-padding:
-    12px
-    16px;
-
-border-radius:
-    12px;
-
-border:
-    1px solid
-    #e6ddd8;
-
-box-shadow:
-    0
-    3px
-    12px
-    rgba(
-        0,
-        0,
-        0,
-        0.05
-    );
-
-}
-
-.status-row {
-
-display:
-    flex;
-
-justify-content:
-    space-between;
-
-align-items:
-    center;
-
-gap:
-    12px;
-
-padding:
-    6px
-    0;
-
-font-size:
-    12px;
-
-font-weight:
-    700;
-
-}
-
-.status {
-
-font-weight:
-    800;
-
-}
-
-.status.waiting {
-
-color:
-    #d97706;
-
-}
-
-.status.connected {
-
-color:
-    #15803d;
-
-}
-
-.status.error {
-
-color:
-    #dc2626;
-
-}
-
-/* =====================================================
-FOOTER
-===================================================== */
-
-footer {
-
-text-align:
-    center;
-
-margin-top:
-    22px;
-
-padding:
-    10px;
-
-color:
-    var(--turuncu-koyu);
-
-font-size:
-    18px;
-
-font-style:
-    italic;
-
-}
-
-footer strong {
-
-font-weight:
-    800;
-
-}
-
-/* =====================================================
-MOBİL
-===================================================== */
-
-@media (
-max-width: 500px
-) {
-
-.container {
-
-    padding-left:
-        8px;
-
-    padding-right:
-        8px;
-
-    padding-top:
-        8px;
-
-}
-
-
-.header {
+    background: var(--turuncu);
+    color: #000000;
+
+    padding:
+        22px
+        20px
+        20px;
 
     border-radius:
-        14px
-        14px
+        18px
+        18px
         0
         0;
 
-    padding:
+    text-align: center;
+
+    box-shadow:
+        0
+        5px
         18px
-        10px
-        17px;
-
+        rgba(0, 0, 0, 0.10);
 }
-
 
 .header h1 {
-
     font-size:
-        27px;
+        clamp(
+            26px,
+            6vw,
+            42px
+        );
 
+    line-height: 1.1;
+
+    font-weight: 900;
+
+    letter-spacing: 0.5px;
+
+    text-transform: uppercase;
 }
-
 
 .header p {
+    margin-top: 7px;
 
-    font-size:
-        11px;
+    font-size: 13px;
 
+    font-weight: 700;
+
+    letter-spacing: 1.5px;
+
+    opacity: 0.75;
 }
 
-
-.has-altin-card {
-
-    padding:
-        14px
-        10px;
-
-}
-
-
-.has-price {
-
-    font-size:
-        17px;
-
-}
-
-
-.has-price-box {
-
-    padding:
-        10px
-        5px;
-
-}
-
-
-.ons-box {
-
-    margin-top:
-        10px;
-
-    padding:
-        10px
-        5px;
-
-}
-
-
-.ons-label {
-
-    font-size:
-        11px;
-
-}
-
-
-.ons-price {
-
-    font-size:
-        17px;
-
-}
-
-
-.table-header {
-
-    font-size:
-        13px;
-
-}
-
-
-.table-header div {
-
-    padding:
-        13px
-        4px;
-
-}
-
-
-.table-header div:first-child {
-
-    padding-left:
-        10px;
-
-}
-
-
-.product-name {
-
-    padding-left:
-        10px;
-
-    font-size:
-        14px;
-
-}
-
-
-.buy-price,
-.sell-price {
-
-    font-size:
-        18px;
-
-    font-weight:
-        900;
-
-    min-height:
-        62px;
-
-    padding:
-        2px;
-
-    letter-spacing:
-        -0.5px;
-
-}
-
-
-.price-row {
-
-    min-height:
-        62px;
-
-}
-
-
-.status-row {
-
-    font-size:
-        11px;
-
-}
-
-
-footer {
-
-    font-size:
-        16px;
-
-}
-
-}
 
 /* =====================================================
-ÇOK KÜÇÜK EKRANLAR
+   HAS ALTIN
 ===================================================== */
 
-@media (
-max-width: 360px
-) {
+.has-altin-card {
+    background: var(--beyaz);
 
-.header h1 {
+    border-left:
+        5px solid
+        var(--turuncu);
 
-    font-size:
-        23px;
+    border-right:
+        5px solid
+        var(--turuncu);
 
+    padding:
+        18px
+        16px;
+
+    text-align: center;
+
+    box-shadow:
+        0
+        4px
+        16px
+        rgba(0, 0, 0, 0.07);
 }
 
+.has-altin-title {
+    color: var(--turuncu-koyu);
 
-.has-price {
+    font-size: 16px;
 
-    font-size:
-        14px;
+    font-weight: 900;
 
+    letter-spacing: 1px;
+
+    margin-bottom: 14px;
 }
 
+.has-altin-prices {
+    display: grid;
+
+    grid-template-columns:
+        1fr
+        1fr;
+
+    gap: 12px;
+}
+
+.has-price-box {
+    background: var(--krem);
+
+    border:
+        1px solid
+        var(--kenarlik);
+
+    border-radius: 12px;
+
+    padding:
+        12px
+        8px;
+}
 
 .has-price-label {
+    display: block;
+
+    color: var(--gri);
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    margin-bottom: 5px;
+}
+
+.has-price {
+    display: block;
 
     font-size:
-        10px;
+        clamp(
+            18px,
+            4.5vw,
+            25px
+        );
 
+    font-weight: 900;
+
+    white-space: nowrap;
 }
 
 
-.ons-label {
+/* =====================================================
+   FİYAT TABLOSU
+===================================================== */
 
-    font-size:
-        10px;
+.price-section {
+    margin-top: 14px;
 
+    border-radius: 16px;
+
+    overflow: hidden;
+
+    background: var(--beyaz);
+
+    border:
+        1px solid
+        var(--kenarlik);
+
+    box-shadow:
+        0
+        5px
+        18px
+        rgba(0, 0, 0, 0.08);
 }
 
 
-.ons-price {
-
-    font-size:
-        14px;
-
-}
-
+/* =====================================================
+   TABLO BAŞLIĞI
+===================================================== */
 
 .table-header {
+    display: grid;
 
-    font-size:
-        11px;
+    grid-template-columns:
+        1.6fr
+        1fr
+        1fr;
 
+    background: var(--turuncu);
+
+    color: #000000;
+
+    font-size: 16px;
+
+    font-weight: 900;
+
+    letter-spacing: 0.5px;
+
+    text-align: center;
 }
 
+.table-header div {
+    padding:
+        15px
+        8px;
+}
+
+.table-header div:first-child {
+    text-align: left;
+
+    padding-left: 16px;
+}
+
+
+/* =====================================================
+   FİYAT SATIRLARI
+===================================================== */
+
+.price-row {
+    display: grid;
+
+    grid-template-columns:
+        1.6fr
+        1fr
+        1fr;
+
+    align-items: center;
+
+    min-height: 68px;
+
+    border-top:
+        1px solid
+        var(--kenarlik);
+}
+
+
+/* =====================================================
+   ALTERNATİF SATIR RENKLERİ
+===================================================== */
+
+.price-row:nth-child(odd) {
+    background: var(--krem);
+}
+
+.price-row:nth-child(even) {
+    background: var(--beyaz);
+}
+
+
+/* =====================================================
+   ÜRÜN ADI
+===================================================== */
 
 .product-name {
+    padding:
+        12px
+        10px
+        12px
+        16px;
 
     font-size:
-        12px;
+        clamp(
+            15px,
+            4vw,
+            21px
+        );
 
+    font-weight: 900;
+
+    text-transform: uppercase;
+
+    line-height: 1.2;
 }
 
+
+/* =====================================================
+   FİYATLAR
+===================================================== */
 
 .buy-price,
 .sell-price {
+    height: 100%;
+
+    min-height: 68px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 8px;
 
     font-size:
-        16px;
+        clamp(
+            16px,
+            3.8vw,
+            21px
+        );
 
-    font-weight:
-        900;
+    font-weight: 900;
 
-    padding:
-        2px;
-
-    letter-spacing:
-        -0.5px;
-
+    white-space: nowrap;
 }
 
+.buy-price {
+    border-left:
+        1px solid
+        var(--kenarlik);
+}
+
+.sell-price {
+    border-left:
+        1px solid
+        var(--kenarlik);
+}
+
+
+/* =====================================================
+   DURUM KARTI
+===================================================== */
+
+.status-card {
+    background: var(--beyaz);
+
+    margin-top: 14px;
+
+    padding:
+        12px
+        16px;
+
+    border-radius: 12px;
+
+    border:
+        1px solid
+        #e6ddd8;
+
+    box-shadow:
+        0
+        3px
+        12px
+        rgba(0, 0, 0, 0.05);
+}
+
+.status-row {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding:
+        6px
+        0;
+
+    font-size: 12px;
+
+    font-weight: 700;
+}
+
+.status {
+    font-weight: 800;
+}
+
+.status.waiting {
+    color: #d97706;
+}
+
+.status.connected {
+    color: #15803d;
+}
+
+.status.error {
+    color: #dc2626;
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+footer {
+    text-align: center;
+
+    margin-top: 22px;
+
+    padding: 10px;
+
+    color: var(--turuncu-koyu);
+
+    font-size: 18px;
+
+    font-style: italic;
+}
+
+footer strong {
+    font-weight: 800;
+}
+
+
+/* =====================================================
+   MOBİL
+===================================================== */
+
+@media (max-width: 500px) {
+
+    .container {
+        padding-left: 8px;
+        padding-right: 8px;
+        padding-top: 8px;
+    }
+
+    .header {
+        border-radius:
+            14px
+            14px
+            0
+            0;
+
+        padding:
+            18px
+            10px
+            17px;
+    }
+
+    .header h1 {
+        font-size: 27px;
+    }
+
+    .header p {
+        font-size: 11px;
+    }
+
+    .has-altin-card {
+        padding:
+            14px
+            10px;
+    }
+
+    .has-price {
+        font-size: 17px;
+    }
+
+    .has-price-box {
+        padding:
+            10px
+            5px;
+    }
+
+    .table-header {
+        font-size: 13px;
+    }
+
+    .table-header div {
+        padding:
+            13px
+            4px;
+    }
+
+    .table-header div:first-child {
+        padding-left: 10px;
+    }
+
+    .product-name {
+        padding-left: 10px;
+
+        font-size: 14px;
+    }
+
+    .buy-price,
+    .sell-price {
+        font-size: 18px;
+
+        font-weight: 900;
+
+        min-height: 62px;
+
+        padding: 2px;
+
+        letter-spacing: -0.5px;
+    }
+
+    .price-row {
+        min-height: 62px;
+    }
+
+    .status-row {
+        font-size: 11px;
+    }
+
+    footer {
+        font-size: 16px;
+    }
+}
+
+
+/* =====================================================
+   ÇOK KÜÇÜK EKRANLAR
+===================================================== */
+
+@media (max-width: 360px) {
+
+    .header h1 {
+        font-size: 23px;
+    }
+
+    .has-price {
+        font-size: 14px;
+    }
+
+    .has-price-label {
+        font-size: 10px;
+    }
+
+    .table-header {
+        font-size: 11px;
+    }
+
+    .product-name {
+        font-size: 12px;
+    }
+
+    .buy-price,
+    .sell-price {
+        font-size: 16px;
+
+        font-weight: 900;
+
+        padding: 2px;
+
+        letter-spacing: -0.5px;
+    }
 }
