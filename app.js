@@ -1,12 +1,9 @@
 "use strict";
 
-# /*
-
-PAZAR KUYUMCULAR
-CANLI ALTIN FİYAT HESAPLAMA
-===========================
-
-*/
+// =====================================================
+// PAZAR KUYUMCULAR
+// CANLI ALTIN FİYAT HESAPLAMA
+// =====================================================
 
 // =====================================================
 // KATSAYILAR
@@ -65,7 +62,7 @@ const hasAltinBozusPrice =
 document.getElementById("hasAltinBozusPrice");
 
 // =====================================================
-// DURUM GÜNCELLEME
+// BAĞLANTI DURUMUNU GÜNCELLE
 // =====================================================
 
 function setConnectionStatus(
@@ -88,11 +85,8 @@ connectionStatus.className =
 }
 
 // =====================================================
-// FİYAT FORMATLAMA
-//
-// Ürün fiyatları en yakın 10 TL'ye yuvarlanır.
-// Hesaplama tam hassasiyetle yapılır.
-// Yuvarlama sadece ekranda gösterilir.
+// ÜRÜN FİYATI FORMATLAMA
+// En yakın 10 TL'ye yuvarlanır.
 // =====================================================
 
 function formatTL(value) {
@@ -116,9 +110,7 @@ return roundedValue.toLocaleString(
 }
 
 // =====================================================
-// HAS ALTIN FİYAT FORMATLAMA
-//
-// Has Altın fiyatları yuvarlanmaz.
+// HAS ALTIN FİYATI FORMATLAMA
 // Kuruşlarıyla gösterilir.
 // =====================================================
 
@@ -144,7 +136,7 @@ return number.toLocaleString(
 }
 
 // =====================================================
-// ÜRÜN FİYATI GÖSTER
+// FİYAT GÖSTER
 // =====================================================
 
 function setPrice(
@@ -174,12 +166,6 @@ element.textContent =
 
 // =====================================================
 // FİYATLARI HESAPLA
-//
-// SATIŞ:
-// Has Altın SATIŞ fiyatı üzerinden
-//
-// BOZUŞ / ALIŞ:
-// Has Altın ALIŞ fiyatı üzerinden
 // =====================================================
 
 function hesapla(
@@ -188,9 +174,7 @@ hasAltinBozus
 ) {
 
 ```
-// =================================================
 // 24 AYAR
-// =================================================
 
 setPrice(
     "ayar24Satis",
@@ -205,9 +189,7 @@ setPrice(
 );
 
 
-// =================================================
 // 22 AYAR
-// =================================================
 
 setPrice(
     "ayar22Satis",
@@ -222,9 +204,7 @@ setPrice(
 );
 
 
-// =================================================
 // ZİYNET ÇEYREK
-// =================================================
 
 setPrice(
     "ceyrekZiynetSatis",
@@ -239,9 +219,7 @@ setPrice(
 );
 
 
-// =================================================
 // ATA ÇEYREK
-// =================================================
 
 setPrice(
     "ceyrekCumhuriyetSatis",
@@ -256,9 +234,7 @@ setPrice(
 );
 
 
-// =================================================
 // TAM ZİYNET
-// =================================================
 
 setPrice(
     "tamZiynetSatis",
@@ -273,9 +249,7 @@ setPrice(
 );
 
 
-// =================================================
 // ATA TAM
-// =================================================
 
 setPrice(
     "tamCumhuriyetSatis",
@@ -302,7 +276,7 @@ typeof io !== "function"
 
 ```
 console.error(
-    "Socket.IO yüklenemedi. index.html içindeki Socket.IO CDN bağlantısını kontrol edin."
+    "Socket.IO yüklenemedi."
 );
 
 setConnectionStatus(
@@ -321,37 +295,22 @@ setConnectionStatus(
 const socket = io(
     "https://hrmsocketonly.haremaltin.com",
     {
-
-        path:
-            "/socket.io/",
-
-        transports:
-            [
-                "polling",
-                "websocket"
-            ],
-
-        reconnection:
-            true,
-
-        reconnectionAttempts:
-            Infinity,
-
-        reconnectionDelay:
-            2000,
-
-        reconnectionDelayMax:
-            10000,
-
-        timeout:
-            10000
-
+        path: "/socket.io/",
+        transports: [
+            "polling",
+            "websocket"
+        ],
+        reconnection: true,
+        reconnectionAttempts: Infinity,
+        reconnectionDelay: 2000,
+        reconnectionDelayMax: 10000,
+        timeout: 10000
     }
 );
 
 
 // =================================================
-// BAŞLANGIÇ DURUMU
+// BAŞLANGIÇ
 // =================================================
 
 setConnectionStatus(
@@ -366,11 +325,7 @@ setConnectionStatus(
 
 socket.on(
     "connect",
-    () => {
-
-        console.log(
-            "===================================="
-        );
+    function () {
 
         console.log(
             "HAREM ALTIN SOCKET.IO BAĞLANTISI BAŞARILI"
@@ -386,11 +341,6 @@ socket.on(
             socket.io.engine.transport.name
         );
 
-        console.log(
-            "===================================="
-        );
-
-
         setConnectionStatus(
             "Bağlandı",
             "connected"
@@ -401,22 +351,18 @@ socket.on(
 
 
 // =================================================
-// FİYAT DEĞİŞİKLİĞİ
+// FİYAT VERİSİ
 // =================================================
 
 socket.on(
     "price_changed",
-    (response) => {
+    function (response) {
 
         console.log(
             "HAREM ALTIN FİYAT VERİSİ:",
             response
         );
 
-
-        // =============================================
-        // VERİ KONTROLÜ
-        // =============================================
 
         if (
             !response ||
@@ -430,21 +376,12 @@ socket.on(
             );
 
             return;
-
         }
 
-
-        // =============================================
-        // ALTIN VERİSİ
-        // =============================================
 
         const altin =
             response.data.ALTIN;
 
-
-        // =============================================
-        // HAS ALTIN SATIŞ
-        // =============================================
 
         const hasAltinSatis =
             Number(
@@ -452,19 +389,11 @@ socket.on(
             );
 
 
-        // =============================================
-        // HAS ALTIN ALIŞ / BOZUŞ
-        // =============================================
-
         const hasAltinBozus =
             Number(
                 altin.alis
             );
 
-
-        // =============================================
-        // FİYAT KONTROLÜ
-        // =============================================
 
         if (
             !Number.isFinite(
@@ -478,26 +407,18 @@ socket.on(
             console.error(
                 "Geçersiz Has Altın fiyatı:",
                 {
-                    satis:
-                        altin.satis,
-
-                    alis:
-                        altin.alis
+                    satis: altin.satis,
+                    alis: altin.alis
                 }
             );
 
             return;
-
         }
 
 
-        // =============================================
-        // HAS ALTIN SATIŞ GÖSTER
-        // =============================================
+        // HAS ALTIN SATIŞ
 
-        if (
-            hasAltinPrice
-        ) {
+        if (hasAltinPrice) {
 
             hasAltinPrice.textContent =
                 formatHasAltinTL(
@@ -507,13 +428,9 @@ socket.on(
         }
 
 
-        // =============================================
-        // HAS ALTIN ALIŞ GÖSTER
-        // =============================================
+        // HAS ALTIN ALIŞ
 
-        if (
-            hasAltinBozusPrice
-        ) {
+        if (hasAltinBozusPrice) {
 
             hasAltinBozusPrice.textContent =
                 formatHasAltinTL(
@@ -523,24 +440,17 @@ socket.on(
         }
 
 
-        // =============================================
         // SON GÜNCELLEME
-        // =============================================
 
-        if (
-            updateTime
-        ) {
+        if (updateTime) {
 
             updateTime.textContent =
-                altin.tarih ||
-                "-";
+                altin.tarih || "-";
 
         }
 
 
-        // =============================================
-        // TÜM ÜRÜN FİYATLARINI HESAPLA
-        // =============================================
+        // ÜRÜN FİYATLARI
 
         hesapla(
             hasAltinSatis,
@@ -552,16 +462,14 @@ socket.on(
 
 
 // =================================================
-// TÜM GELEN SOCKET EVENT'LERİNİ KONSOLA YAZ
-//
-// Bu bölüm teşhis için kullanılır.
+// TÜM SOCKET EVENTLERİNİ GÖSTER
 // =================================================
 
 socket.onAny(
-    (
+    function (
         eventName,
         ...args
-    ) => {
+    ) {
 
         console.log(
             "[SOCKET EVENT]",
@@ -579,10 +487,10 @@ socket.onAny(
 
 socket.on(
     "disconnect",
-    (reason) => {
+    function (reason) {
 
         console.warn(
-            "HAREM ALTIN SOCKET.IO BAĞLANTISI KESİLDİ:",
+            "Socket.IO bağlantısı kesildi:",
             reason
         );
 
@@ -601,11 +509,7 @@ socket.on(
 
 socket.on(
     "connect_error",
-    (error) => {
-
-        console.error(
-            "===================================="
-        );
+    function (error) {
 
         console.error(
             "HAREM ALTIN SOCKET.IO BAĞLANTI HATASI"
@@ -626,11 +530,6 @@ socket.on(
             error.context
         );
 
-        console.error(
-            "===================================="
-        );
-
-
         setConnectionStatus(
             "Bağlantı hatası",
             "error"
@@ -646,10 +545,10 @@ socket.on(
 
 socket.io.on(
     "reconnect_attempt",
-    (attempt) => {
+    function (attempt) {
 
         console.warn(
-            "Yeniden bağlanma deneniyor:",
+            "Yeniden bağlanılıyor. Deneme:",
             attempt
         );
 
@@ -668,38 +567,16 @@ socket.io.on(
 
 socket.io.on(
     "reconnect",
-    (attempt) => {
+    function (attempt) {
 
         console.log(
             "Socket.IO yeniden bağlandı.",
-            "Deneme:",
             attempt
         );
 
         setConnectionStatus(
             "Bağlandı",
             "connected"
-        );
-
-    }
-);
-
-
-// =================================================
-// YENİDEN BAĞLANMA BAŞARISIZ
-// =================================================
-
-socket.io.on(
-    "reconnect_failed",
-    () => {
-
-        console.error(
-            "Socket.IO yeniden bağlanma başarısız."
-        );
-
-        setConnectionStatus(
-            "Bağlantı kurulamadı",
-            "error"
         );
 
     }
@@ -719,14 +596,14 @@ if (
 ```
 window.addEventListener(
     "load",
-    () => {
+    function () {
 
         navigator.serviceWorker
             .register(
                 "sw.js"
             )
             .then(
-                registration => {
+                function (registration) {
 
                     console.log(
                         "Service Worker aktif:",
@@ -736,7 +613,7 @@ window.addEventListener(
                 }
             )
             .catch(
-                error => {
+                function (error) {
 
                     console.error(
                         "Service Worker kayıt hatası:",
