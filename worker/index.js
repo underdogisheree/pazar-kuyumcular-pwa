@@ -5,6 +5,10 @@ export default {
 
         const path = url.pathname;
 
+        const headers = {
+            "X-Worker-Active": "pazar-kuyumcular-worker"
+        };
+
 
         // =====================================================
         // COOKIE KONTROLÜ
@@ -27,8 +31,33 @@ export default {
             path === "/login.html"
         ) {
 
-            return env.ASSETS.fetch(
-                request
+            const response =
+                await env.ASSETS.fetch(
+                    request
+                );
+
+            const newHeaders =
+                new Headers(
+                    response.headers
+                );
+
+            newHeaders.set(
+                "X-Worker-Active",
+                "pazar-kuyumcular-worker"
+            );
+
+            return new Response(
+                response.body,
+                {
+                    status:
+                        response.status,
+
+                    statusText:
+                        response.statusText,
+
+                    headers:
+                        newHeaders
+                }
             );
 
         }
@@ -74,14 +103,11 @@ export default {
                     !correctPassword
                 ) {
 
-                    console.error(
-                        "LOGIN_USERNAME veya LOGIN_PASSWORD tanımlı değil."
-                    );
-
                     return new Response(
                         "Sunucu giriş ayarları eksik.",
                         {
-                            status: 500
+                            status: 500,
+                            headers
                         }
                     );
 
@@ -89,7 +115,7 @@ export default {
 
 
                 // =================================================
-                // KULLANICI ADI VE ŞİFRE DOĞRU
+                // GİRİŞ BAŞARILI
                 // =================================================
 
                 if (
@@ -103,14 +129,15 @@ export default {
                             status: 302,
 
                             headers: {
+                                ...headers,
 
-                                "Location": "/",
+                                "Location":
+                                    "/"
+                                ,
 
                                 "Set-Cookie":
                                     "pazar_auth=authenticated; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=86400"
-
                             }
-
                         }
                     );
 
@@ -138,94 +165,17 @@ export default {
 
                         <title>Giriş Hatası</title>
 
-                        <style>
-
-                            body {
-                                font-family:
-                                    Arial,
-                                    sans-serif;
-
-                                background:
-                                    #f7f3f0;
-
-                                display:
-                                    flex;
-
-                                justify-content:
-                                    center;
-
-                                align-items:
-                                    center;
-
-                                min-height:
-                                    100vh;
-
-                                margin:
-                                    0;
-                            }
-
-                            .box {
-                                background:
-                                    #ffffff;
-
-                                padding:
-                                    30px;
-
-                                border-radius:
-                                    16px;
-
-                                text-align:
-                                    center;
-
-                                box-shadow:
-                                    0 5px 20px
-                                    rgba(
-                                        0,
-                                        0,
-                                        0,
-                                        0.1
-                                    );
-                            }
-
-                            h2 {
-                                color:
-                                    #d95720;
-                            }
-
-                            a {
-                                display:
-                                    inline-block;
-
-                                margin-top:
-                                    15px;
-
-                                color:
-                                    #ef6c2f;
-
-                                font-weight:
-                                    bold;
-
-                                text-decoration:
-                                    none;
-                            }
-
-                        </style>
-
                     </head>
 
                     <body>
 
-                        <div class="box">
+                        <h2>
+                            Kullanıcı adı veya şifre hatalı.
+                        </h2>
 
-                            <h2>
-                                Kullanıcı adı veya şifre hatalı.
-                            </h2>
-
-                            <a href="/login.html">
-                                Tekrar giriş yap
-                            </a>
-
-                        </div>
+                        <a href="/login.html">
+                            Tekrar giriş yap
+                        </a>
 
                     </body>
 
@@ -235,12 +185,11 @@ export default {
                         status: 401,
 
                         headers: {
+                            ...headers,
 
                             "Content-Type":
                                 "text/html; charset=UTF-8"
-
                         }
-
                     }
                 );
 
@@ -254,7 +203,8 @@ export default {
                 return new Response(
                     "Giriş işlemi sırasında hata oluştu.",
                     {
-                        status: 500
+                        status: 500,
+                        headers
                     }
                 );
 
@@ -278,11 +228,13 @@ export default {
 
                     headers: {
 
-                        "Location": "/login.html",
+                        ...headers,
+
+                        "Location":
+                            "/login.html",
 
                         "Set-Cookie":
                             "pazar_auth=; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=0"
-
                     }
 
                 }
@@ -292,13 +244,15 @@ export default {
 
 
         // =====================================================
-        // ANA SAYFA KONTROLÜ
+        // ANA SAYFA
         // =====================================================
 
         if (
             path === "/" ||
             path === "/index.html"
         ) {
+
+            // GİRİŞ YAPILMADIYSA LOGIN'E GÖNDER
 
             if (
                 !isAuthenticated
@@ -310,6 +264,9 @@ export default {
                         status: 302,
 
                         headers: {
+
+                            ...headers,
+
                             "Location":
                                 "/login.html"
                         }
@@ -320,16 +277,43 @@ export default {
             }
 
 
-            return env.ASSETS.fetch(
-                request
+            // GİRİŞ YAPILDIYSA ANA SAYFAYI GÖSTER
+
+            const response =
+                await env.ASSETS.fetch(
+                    request
+                );
+
+
+            const newHeaders =
+                new Headers(
+                    response.headers
+                );
+
+            newHeaders.set(
+                "X-Worker-Active",
+                "pazar-kuyumcular-worker"
+            );
+
+            return new Response(
+                response.body,
+                {
+                    status:
+                        response.status,
+
+                    statusText:
+                        response.statusText,
+
+                    headers:
+                        newHeaders
+                }
             );
 
         }
 
 
         // =====================================================
-        // LOGIN YAPILMAMIŞSA
-        // UYGULAMA DOSYALARINA ERİŞİMİ ENGELLE
+        // GİRİŞ YAPILMADIYSA DİĞER DOSYALARI ENGELLE
         // =====================================================
 
         if (
@@ -342,6 +326,9 @@ export default {
                     status: 302,
 
                     headers: {
+
+                        ...headers,
+
                         "Location":
                             "/login.html"
                     }
@@ -353,7 +340,7 @@ export default {
 
 
         // =====================================================
-        // GİRİŞ YAPILMIŞSA DİĞER DOSYALARA İZİN VER
+        // GİRİŞ YAPILDIYSA DOSYALARA İZİN VER
         // =====================================================
 
         return env.ASSETS.fetch(
