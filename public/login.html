@@ -1,1 +1,173 @@
+<!DOCTYPE html>
+<html lang="tr">
 
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    >
+
+    <meta
+        name="theme-color"
+        content="#ef6c2f"
+    >
+
+    <meta
+        name="description"
+        content="Pazar Kuyumcular kullanıcı giriş ekranı"
+    >
+
+    <link
+        rel="stylesheet"
+        href="login.css"
+    >
+
+    <title>Pazar Kuyumcular - Giriş</title>
+
+</head>
+
+
+<body>
+
+
+    <main class="login-container">
+
+
+        <!-- ================================================= -->
+        <!-- GİRİŞ KARTI -->
+        <!-- ================================================= -->
+
+        <section class="login-card">
+
+
+            <!-- ================================================= -->
+            <!-- BAŞLIK -->
+            <!-- ================================================= -->
+
+            <header class="login-header">
+
+                <div class="login-icon">
+                    ₺
+                </div>
+
+                <h1>
+                    PAZAR KUYUMCULAR
+                </h1>
+
+                <p>
+                    CANLI ALTIN FİYATLARI
+                </p>
+
+            </header>
+
+
+            <!-- ================================================= -->
+            <!-- GİRİŞ FORMU -->
+            <!-- ================================================= -->
+
+            <form
+                id="loginForm"
+                class="login-form"
+            >
+
+
+                <div class="form-title">
+                    GİRİŞ YAP
+                </div>
+
+
+                <!-- KULLANICI ADI -->
+
+                <div class="form-group">
+
+                    <label for="username">
+                        KULLANICI ADI
+                    </label>
+
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Kullanıcı adınızı girin"
+                        autocomplete="username"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- ŞİFRE -->
+
+                <div class="form-group">
+
+                    <label for="password">
+                        ŞİFRE
+                    </label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Şifrenizi girin"
+                        autocomplete="current-password"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- HATA MESAJI -->
+
+                <div
+                    id="loginMessage"
+                    class="login-message"
+                    aria-live="polite"
+                ></div>
+
+
+                <!-- GİRİŞ BUTONU -->
+
+                <button
+                    type="submit"
+                    id="loginButton"
+                    class="login-button"
+                >
+                    GİRİŞ YAP
+                </button>
+
+
+            </form>
+
+
+            <!-- ================================================= -->
+            <!-- ALT BİLGİ -->
+            <!-- ================================================= -->
+
+            <footer class="login-footer">
+
+                <strong>
+                    Hayırlı işler, bol kazançlar...
+                </strong>
+
+            </footer>
+
+
+        </section>
+
+
+    </main>
+
+
+    <!-- ================================================= -->
+    <!-- GİRİŞ JAVASCRIPT -->
+    <!-- ================================================= -->
+
+    <script src="login.js"></script>
+
+
+</body>
+
+</html>
