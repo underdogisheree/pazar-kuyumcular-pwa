@@ -28,7 +28,7 @@ const katsayilar = {
 
     tamCumhuriyet: {
         satis: 6.80,
-        bozus: 6.60
+        bozus: 6.605
     }
 };
 
