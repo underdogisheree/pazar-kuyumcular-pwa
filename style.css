@@ -794,19 +794,24 @@ footer strong {
 
 
     .buy-price,
-    .sell-price {
+.sell-price {
 
-        font-size:
-            16px;
+    font-size:
+        18px;
 
-        min-height:
-            62px;
+    font-weight:
+        900;
 
-        padding:
-            4px;
+    min-height:
+        62px;
 
-    }
+    padding:
+        2px;
 
+    letter-spacing:
+        -0.5px;
+
+}
 
     .price-row {
 
