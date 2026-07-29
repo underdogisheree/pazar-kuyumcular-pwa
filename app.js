@@ -32,6 +32,7 @@ const katsayilar = {
     }
 };
 
+
 const connectionStatus =
     document.getElementById("connectionStatus");
 
@@ -47,14 +48,15 @@ const hasAltinBozusPrice =
 
 function durumYaz(mesaj, sinif) {
 
-    if (connectionStatus) {
-
-        connectionStatus.textContent =
-            mesaj;
-
-        connectionStatus.className =
-            "status " + sinif;
+    if (!connectionStatus) {
+        return;
     }
+
+    connectionStatus.textContent =
+        mesaj;
+
+    connectionStatus.className =
+        "status " + sinif;
 }
 
 
@@ -104,11 +106,12 @@ function fiyatYaz(id, deger) {
     const element =
         document.getElementById(id);
 
-    if (element) {
-
-        element.textContent =
-            formatTL(deger);
+    if (!element) {
+        return;
     }
+
+    element.textContent =
+        formatTL(deger);
 }
 
 
@@ -116,79 +119,67 @@ function hesapla(satis, alis) {
 
     fiyatYaz(
         "ayar24Satis",
-        satis *
-        katsayilar.ayar24.satis
+        satis * katsayilar.ayar24.satis
     );
 
     fiyatYaz(
         "ayar24Bozus",
-        alis *
-        katsayilar.ayar24.bozus
+        alis * katsayilar.ayar24.bozus
     );
 
 
     fiyatYaz(
         "ayar22Satis",
-        satis *
-        katsayilar.ayar22.satis
+        satis * katsayilar.ayar22.satis
     );
 
     fiyatYaz(
         "ayar22Bozus",
-        alis *
-        katsayilar.ayar22.bozus
+        alis * katsayilar.ayar22.bozus
     );
 
 
     fiyatYaz(
         "ceyrekZiynetSatis",
-        satis *
-        katsayilar.ceyrekZiynet.satis
+        satis * katsayilar.ceyrekZiynet.satis
     );
 
     fiyatYaz(
         "ceyrekZiynetBozus",
-        alis *
-        katsayilar.ceyrekZiynet.bozus
+        alis * katsayilar.ceyrekZiynet.bozus
     );
 
 
     fiyatYaz(
         "ceyrekCumhuriyetSatis",
-        satis *
-        katsayilar.ceyrekCumhuriyet.satis
+        satis * katsayilar.ceyrekCumhuriyet.satis
     );
 
     fiyatYaz(
         "ceyrekCumhuriyetBozus",
-        alis *
-        katsayilar.ceyrekCumhuriyet.bozus
+        alis * katsayilar.ceyrekCumhuriyet.bozus
     );
 
 
     fiyatYaz(
         "tamZiynetSatis",
-        satis *
-        katsayilar.tamZiynet.satis
+        satis * katsayilar.tamZiynet.satis
     );
 
     fiyatYaz(
         "tamZiynetBozus",
-        alis *
-        katsayilar.tamZiynet.bozus
+        alis * katsayilar.tamZiynet.bozus
     );
 
 
     fiyatYaz(
         "tamCumhuriyetSatis",
-        satis *
-        katsayilar.tamCumhuriyet.satis
+        satis * katsayilar.tamCumhuriyet.satis
     );
 
     fiyatYaz(
         "tamCumhuriyetBozus",
-        alis *
-        katsayilar.tamCumhuriyet.bozus
+        alis * katsayilar.tamCumhuriyet.bozus
     );
 }
 
@@ -227,10 +218,7 @@ function baslat() {
             "https://hrmsocketonly.haremaltin.com",
             {
                 path: "/socket.io/",
-                transports: [
-                    "polling",
-                    "websocket"
-                ],
+                transports: ["websocket"],
                 reconnection: true,
                 reconnectionAttempts: Infinity,
                 reconnectionDelay: 2000,
@@ -250,7 +238,7 @@ function baslat() {
         function() {
 
             console.log(
-                "HAREM ALTIN BAĞLANTISI BAŞARILI"
+                "HAREM ALTIN WEBSOCKET BAĞLANTISI BAŞARILI"
             );
 
             console.log(
@@ -313,7 +301,7 @@ function baslat() {
             ) {
 
                 console.error(
-                    "Geçersiz fiyat:",
+                    "Geçersiz Has Altın fiyatı:",
                     altin
                 );
 
@@ -366,7 +354,7 @@ function baslat() {
         function(reason) {
 
             console.warn(
-                "Socket bağlantısı kesildi:",
+                "WebSocket bağlantısı kesildi:",
                 reason
             );
 
@@ -383,7 +371,7 @@ function baslat() {
         function(error) {
 
             console.error(
-                "SOCKET.IO BAĞLANTI HATASI:",
+                "WEBSOCKET BAĞLANTI HATASI:",
                 error
             );
 
@@ -402,8 +390,7 @@ function baslat() {
 
 
 if (
-    document.readyState ===
-    "loading"
+    document.readyState === "loading"
 ) {
 
     document.addEventListener(
