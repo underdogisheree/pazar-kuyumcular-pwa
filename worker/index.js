@@ -5,7 +5,7 @@ export default {
 
         /*
         ============================================
-        LOGIN API
+        LOGIN
         ============================================
         */
 
@@ -16,19 +16,10 @@ export default {
 
             try {
 
-                const body =
-                    await request.json();
+                const body = await request.json();
 
-                const username =
-                    body.username;
-
-                const password =
-                    body.password;
-
-
-                /*
-                Cloudflare Secret değişkenleri
-                */
+                const username = body.username;
+                const password = body.password;
 
                 if (
                     username === env.LOGIN_USERNAME &&
@@ -41,7 +32,6 @@ export default {
                         }),
                         {
                             status: 200,
-
                             headers: {
                                 "Content-Type":
                                     "application/json",
@@ -54,7 +44,6 @@ export default {
 
                 }
 
-
                 return new Response(
                     JSON.stringify({
                         success: false,
@@ -63,14 +52,12 @@ export default {
                     }),
                     {
                         status: 401,
-
                         headers: {
                             "Content-Type":
                                 "application/json"
                         }
                     }
                 );
-
 
             } catch (error) {
 
@@ -82,7 +69,6 @@ export default {
                     }),
                     {
                         status: 400,
-
                         headers: {
                             "Content-Type":
                                 "application/json"
@@ -97,7 +83,7 @@ export default {
 
         /*
         ============================================
-        LOGOUT API
+        LOGOUT
         ============================================
         */
 
@@ -111,7 +97,6 @@ export default {
                 }),
                 {
                     status: 200,
-
                     headers: {
                         "Content-Type":
                             "application/json",
@@ -127,7 +112,7 @@ export default {
 
         /*
         ============================================
-        ANA SAYFA KONTROLÜ
+        ANA SAYFA
         ============================================
         */
 
@@ -137,43 +122,32 @@ export default {
         ) {
 
             const cookie =
-                request.headers.get(
-                    "Cookie"
-                ) || "";
+                request.headers.get("Cookie") || "";
 
 
             if (
-                cookie.includes(
+                !cookie.includes(
                     "session=authenticated"
                 )
             ) {
 
-                return new Response(
-                    "Giriş başarılı. Siteye erişim açık.",
-                    {
-                        status: 200
-                    }
+                return Response.redirect(
+                    url.origin + "/login.html",
+                    302
                 );
 
             }
-
-
-            return Response.redirect(
-                url.origin +
-                "/login.html",
-                302
-            );
 
         }
 
 
         /*
         ============================================
-        DİĞER İSTEKLER
+        STATİK DOSYALAR
         ============================================
         */
 
-        return fetch(request);
+        return env.ASSETS.fetch(request);
 
     }
 };
