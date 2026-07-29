@@ -1,12 +1,38 @@
 "use strict";
 
 const katsayilar = {
-ayar24: { satis: 1.015, bozus: 0.995 },
-ayar22: { satis: 0.970, bozus: 0.910 },
-ceyrekZiynet: { satis: 1.66, bozus: 1.60 },
-ceyrekCumhuriyet: { satis: 1.71, bozus: 1.655 },
-tamZiynet: { satis: 6.63, bozus: 6.37 },
-tamCumhuriyet: { satis: 6.80, bozus: 6.61 }
+ayar24: {
+satis: 1.015,
+bozus: 0.995
+},
+
+```
+ayar22: {
+    satis: 0.970,
+    bozus: 0.910
+},
+
+ceyrekZiynet: {
+    satis: 1.66,
+    bozus: 1.60
+},
+
+ceyrekCumhuriyet: {
+    satis: 1.71,
+    bozus: 1.655
+},
+
+tamZiynet: {
+    satis: 6.63,
+    bozus: 6.37
+},
+
+tamCumhuriyet: {
+    satis: 6.80,
+    bozus: 6.61
+}
+```
+
 };
 
 const connectionStatus =
@@ -28,7 +54,8 @@ if (!connectionStatus) {
     return;
 }
 
-connectionStatus.textContent = mesaj;
+connectionStatus.textContent =
+    mesaj;
 
 connectionStatus.className =
     "status " + sinif;
@@ -39,7 +66,8 @@ connectionStatus.className =
 function formatTL(deger) {
 
 ```
-const sayi = Number(deger);
+const sayi =
+    Number(deger);
 
 if (!Number.isFinite(sayi)) {
     return "-";
@@ -59,7 +87,8 @@ return (
 function formatHasAltin(deger) {
 
 ```
-const sayi = Number(deger);
+const sayi =
+    Number(deger);
 
 if (!Number.isFinite(sayi)) {
     return "-";
@@ -100,67 +129,79 @@ function hesapla(satis, alis) {
 ```
 fiyatYaz(
     "ayar24Satis",
-    satis * katsayilar.ayar24.satis
+    satis *
+    katsayilar.ayar24.satis
 );
 
 fiyatYaz(
     "ayar24Bozus",
-    alis * katsayilar.ayar24.bozus
+    alis *
+    katsayilar.ayar24.bozus
 );
 
 
 fiyatYaz(
     "ayar22Satis",
-    satis * katsayilar.ayar22.satis
+    satis *
+    katsayilar.ayar22.satis
 );
 
 fiyatYaz(
     "ayar22Bozus",
-    alis * katsayilar.ayar22.bozus
+    alis *
+    katsayilar.ayar22.bozus
 );
 
 
 fiyatYaz(
     "ceyrekZiynetSatis",
-    satis * katsayilar.ceyrekZiynet.satis
+    satis *
+    katsayilar.ceyrekZiynet.satis
 );
 
 fiyatYaz(
     "ceyrekZiynetBozus",
-    alis * katsayilar.ceyrekZiynet.bozus
+    alis *
+    katsayilar.ceyrekZiynet.bozus
 );
 
 
 fiyatYaz(
     "ceyrekCumhuriyetSatis",
-    satis * katsayilar.ceyrekCumhuriyet.satis
+    satis *
+    katsayilar.ceyrekCumhuriyet.satis
 );
 
 fiyatYaz(
     "ceyrekCumhuriyetBozus",
-    alis * katsayilar.ceyrekCumhuriyet.bozus
+    alis *
+    katsayilar.ceyrekCumhuriyet.bozus
 );
 
 
 fiyatYaz(
     "tamZiynetSatis",
-    satis * katsayilar.tamZiynet.satis
+    satis *
+    katsayilar.tamZiynet.satis
 );
 
 fiyatYaz(
     "tamZiynetBozus",
-    alis * katsayilar.tamZiynet.bozus
+    alis *
+    katsayilar.tamZiynet.bozus
 );
 
 
 fiyatYaz(
     "tamCumhuriyetSatis",
-    satis * katsayilar.tamCumhuriyet.satis
+    satis *
+    katsayilar.tamCumhuriyet.satis
 );
 
 fiyatYaz(
     "tamCumhuriyetBozus",
-    alis * katsayilar.tamCumhuriyet.bozus
+    alis *
+    katsayilar.tamCumhuriyet.bozus
 );
 ```
 
@@ -174,7 +215,9 @@ console.log(
 );
 
 
-if (typeof io !== "function") {
+if (
+    typeof io !== "function"
+) {
 
     console.error(
         "Socket.IO yüklenmedi!"
@@ -268,11 +311,15 @@ socket.on(
 
 
         const satis =
-            Number(altin.satis);
+            Number(
+                altin.satis
+            );
 
 
         const alis =
-            Number(altin.alis);
+            Number(
+                altin.alis
+            );
 
 
         if (
@@ -289,24 +336,35 @@ socket.on(
         }
 
 
-        if (hasAltinPrice) {
+        if (
+            hasAltinPrice
+        ) {
 
             hasAltinPrice.textContent =
-                formatHasAltin(satis);
+                formatHasAltin(
+                    satis
+                );
         }
 
 
-        if (hasAltinBozusPrice) {
+        if (
+            hasAltinBozusPrice
+        ) {
 
             hasAltinBozusPrice.textContent =
-                formatHasAltin(alis);
+                formatHasAltin(
+                    alis
+                );
         }
 
 
-        if (updateTime) {
+        if (
+            updateTime
+        ) {
 
             updateTime.textContent =
-                altin.tarih || "-";
+                altin.tarih ||
+                "-";
         }
 
 
@@ -360,16 +418,21 @@ socket.on(
 }
 
 if (
-    document.readyState === "loading"
+document.readyState ===
+"loading"
 ) {
 
-    document.addEventListener(
-        "DOMContentLoaded",
-        baslat
-    );
+```
+document.addEventListener(
+    "DOMContentLoaded",
+    baslat
+);
+```
 
 } else {
 
-    baslat();
+```
+baslat();
+```
 
 }
