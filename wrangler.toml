@@ -1,5 +1,7 @@
-name = "pazar-kuyumcular"
+name = "pazar-kuyumcular-pwa"
+
 main = "worker/index.js"
+
 compatibility_date = "2026-07-29"
 
 [assets]
