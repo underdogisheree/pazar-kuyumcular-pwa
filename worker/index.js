@@ -7,49 +7,28 @@ export default {
 
 
         // =====================================================
-        // ANA SAYFA
+        // COOKIE KONTROLÜ
+        // =====================================================
+
+        const cookie =
+            request.headers.get("Cookie") || "";
+
+        const isAuthenticated =
+            cookie.includes(
+                "pazar_auth=authenticated"
+            );
+
+
+        // =====================================================
+        // LOGIN SAYFASI
         // =====================================================
 
         if (
-            path === "/" ||
-            path === "/index.html"
+            path === "/login.html"
         ) {
 
-            const cookie =
-                request.headers.get("Cookie") || "";
-
-
-            // Kullanıcı giriş yapmış mı?
-
-            if (
-                cookie.includes(
-                    "pazar_auth=authenticated"
-                )
-            ) {
-
-                return env.ASSETS.fetch(
-                    new Request(
-                        new URL(
-                            "/index.html",
-                            request.url
-                        ),
-                        request
-                    )
-                );
-
-            }
-
-
-            // Giriş yapılmamışsa login sayfası
-
             return env.ASSETS.fetch(
-                new Request(
-                    new URL(
-                        "/login.html",
-                        request.url
-                    ),
-                    request
-                )
+                request
             );
 
         }
@@ -82,8 +61,6 @@ export default {
                     );
 
 
-                // Cloudflare Secrets / Variables
-
                 const correctUsername =
                     env.LOGIN_USERNAME;
 
@@ -92,7 +69,28 @@ export default {
                     env.LOGIN_PASSWORD;
 
 
-                // Kullanıcı adı ve şifre kontrolü
+                if (
+                    !correctUsername ||
+                    !correctPassword
+                ) {
+
+                    console.error(
+                        "LOGIN_USERNAME veya LOGIN_PASSWORD tanımlı değil."
+                    );
+
+                    return new Response(
+                        "Sunucu giriş ayarları eksik.",
+                        {
+                            status: 500
+                        }
+                    );
+
+                }
+
+
+                // =================================================
+                // KULLANICI ADI VE ŞİFRE DOĞRU
+                // =================================================
 
                 if (
                     username === correctUsername &&
@@ -119,7 +117,9 @@ export default {
                 }
 
 
-                // Hatalı giriş
+                // =================================================
+                // HATALI GİRİŞ
+                // =================================================
 
                 return new Response(
                     `
@@ -138,17 +138,94 @@ export default {
 
                         <title>Giriş Hatası</title>
 
+                        <style>
+
+                            body {
+                                font-family:
+                                    Arial,
+                                    sans-serif;
+
+                                background:
+                                    #f7f3f0;
+
+                                display:
+                                    flex;
+
+                                justify-content:
+                                    center;
+
+                                align-items:
+                                    center;
+
+                                min-height:
+                                    100vh;
+
+                                margin:
+                                    0;
+                            }
+
+                            .box {
+                                background:
+                                    #ffffff;
+
+                                padding:
+                                    30px;
+
+                                border-radius:
+                                    16px;
+
+                                text-align:
+                                    center;
+
+                                box-shadow:
+                                    0 5px 20px
+                                    rgba(
+                                        0,
+                                        0,
+                                        0,
+                                        0.1
+                                    );
+                            }
+
+                            h2 {
+                                color:
+                                    #d95720;
+                            }
+
+                            a {
+                                display:
+                                    inline-block;
+
+                                margin-top:
+                                    15px;
+
+                                color:
+                                    #ef6c2f;
+
+                                font-weight:
+                                    bold;
+
+                                text-decoration:
+                                    none;
+                            }
+
+                        </style>
+
                     </head>
 
                     <body>
 
-                        <h2>
-                            Kullanıcı adı veya şifre hatalı.
-                        </h2>
+                        <div class="box">
 
-                        <a href="/login.html">
-                            Tekrar giriş yap
-                        </a>
+                            <h2>
+                                Kullanıcı adı veya şifre hatalı.
+                            </h2>
+
+                            <a href="/login.html">
+                                Tekrar giriş yap
+                            </a>
+
+                        </div>
 
                     </body>
 
@@ -158,9 +235,12 @@ export default {
                         status: 401,
 
                         headers: {
+
                             "Content-Type":
                                 "text/html; charset=UTF-8"
+
                         }
+
                     }
                 );
 
@@ -170,7 +250,6 @@ export default {
                     "Login hatası:",
                     error
                 );
-
 
                 return new Response(
                     "Giriş işlemi sırasında hata oluştu.",
@@ -199,7 +278,7 @@ export default {
 
                     headers: {
 
-                        "Location": "/",
+                        "Location": "/login.html",
 
                         "Set-Cookie":
                             "pazar_auth=; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=0"
@@ -213,28 +292,68 @@ export default {
 
 
         // =====================================================
-        // LOGIN.HTML
+        // ANA SAYFA KONTROLÜ
         // =====================================================
 
         if (
-            path === "/login.html"
+            path === "/" ||
+            path === "/index.html"
         ) {
 
+            if (
+                !isAuthenticated
+            ) {
+
+                return new Response(
+                    null,
+                    {
+                        status: 302,
+
+                        headers: {
+                            "Location":
+                                "/login.html"
+                        }
+
+                    }
+                );
+
+            }
+
+
             return env.ASSETS.fetch(
-                new Request(
-                    new URL(
-                        "/login.html",
-                        request.url
-                    ),
-                    request
-                )
+                request
             );
 
         }
 
 
         // =====================================================
-        // DİĞER DOSYALAR
+        // LOGIN YAPILMAMIŞSA
+        // UYGULAMA DOSYALARINA ERİŞİMİ ENGELLE
+        // =====================================================
+
+        if (
+            !isAuthenticated
+        ) {
+
+            return new Response(
+                null,
+                {
+                    status: 302,
+
+                    headers: {
+                        "Location":
+                            "/login.html"
+                    }
+
+                }
+            );
+
+        }
+
+
+        // =====================================================
+        // GİRİŞ YAPILMIŞSA DİĞER DOSYALARA İZİN VER
         // =====================================================
 
         return env.ASSETS.fetch(
