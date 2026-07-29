@@ -3,151 +3,19 @@ export default {
 
         const url = new URL(request.url);
 
-        /*
-        ============================================
-        LOGIN
-        ============================================
-        */
-
-        if (
-            url.pathname === "/api/login" &&
-            request.method === "POST"
-        ) {
-
-            try {
-
-                const body = await request.json();
-
-                const username = body.username;
-                const password = body.password;
-
-                if (
-                    username === env.LOGIN_USERNAME &&
-                    password === env.LOGIN_PASSWORD
-                ) {
-
-                    return new Response(
-                        JSON.stringify({
-                            success: true
-                        }),
-                        {
-                            status: 200,
-                            headers: {
-                                "Content-Type":
-                                    "application/json",
-
-                                "Set-Cookie":
-                                    "session=authenticated; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=86400"
-                            }
-                        }
-                    );
-
+        return new Response(
+            JSON.stringify({
+                worker: "pazar-kuyumcular-pwa",
+                path: url.pathname,
+                message: "GÜNCEL WORKER ÇALIŞIYOR"
+            }),
+            {
+                status: 200,
+                headers: {
+                    "Content-Type": "application/json; charset=UTF-8"
                 }
-
-                return new Response(
-                    JSON.stringify({
-                        success: false,
-                        message:
-                            "Kullanıcı adı veya şifre hatalı."
-                    }),
-                    {
-                        status: 401,
-                        headers: {
-                            "Content-Type":
-                                "application/json"
-                        }
-                    }
-                );
-
-            } catch (error) {
-
-                return new Response(
-                    JSON.stringify({
-                        success: false,
-                        message:
-                            "Geçersiz istek."
-                    }),
-                    {
-                        status: 400,
-                        headers: {
-                            "Content-Type":
-                                "application/json"
-                        }
-                    }
-                );
-
             }
-
-        }
-
-
-        /*
-        ============================================
-        LOGOUT
-        ============================================
-        */
-
-        if (
-            url.pathname === "/api/logout"
-        ) {
-
-            return new Response(
-                JSON.stringify({
-                    success: true
-                }),
-                {
-                    status: 200,
-                    headers: {
-                        "Content-Type":
-                            "application/json",
-
-                        "Set-Cookie":
-                            "session=; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=0"
-                    }
-                }
-            );
-
-        }
-
-
-        /*
-        ============================================
-        ANA SAYFA
-        ============================================
-        */
-
-        if (
-            url.pathname === "/" ||
-            url.pathname === "/index.html"
-        ) {
-
-            const cookie =
-                request.headers.get("Cookie") || "";
-
-
-            if (
-                !cookie.includes(
-                    "session=authenticated"
-                )
-            ) {
-
-                return Response.redirect(
-                    url.origin + "/login.html",
-                    302
-                );
-
-            }
-
-        }
-
-
-        /*
-        ============================================
-        STATİK DOSYALAR
-        ============================================
-        */
-
-        return env.ASSETS.fetch(request);
+        );
 
     }
 };
