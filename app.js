@@ -301,6 +301,11 @@ socket.on(
             error
         );
 
+        console.error(
+            "Hata mesajı:",
+            error.message
+        );
+
         durumYaz(
             "Bağlantı hatası",
             "error"
