@@ -8,7 +8,7 @@ const katsayilar = {
 
     ayar22: {
         satis: 0.970,
-        bozus: 0.910
+        bozus: 0.908
     },
 
     ceyrekZiynet: {
