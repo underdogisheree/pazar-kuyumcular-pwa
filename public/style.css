@@ -172,6 +172,15 @@ body {
     gap: 12px;
 }
 
+.ons-price-box {
+    grid-column:
+        1 / -1;
+
+    justify-self: center;
+
+    width: calc(50% - 6px);
+}
+
 .has-price-box {
     background: var(--krem);
 
