@@ -45,6 +45,9 @@ const hasAltinPrice =
 const hasAltinBozusPrice =
     document.getElementById("hasAltinBozusPrice");
 
+const onsPrice =
+    document.getElementById("onsPrice");
+
 
 function durumYaz(mesaj, sinif) {
 
@@ -97,6 +100,28 @@ function formatHasAltin(deger) {
             }
         ) +
         " TL"
+    );
+}
+
+
+function formatOns(deger) {
+
+    const sayi =
+        Number(deger);
+
+    if (!Number.isFinite(sayi)) {
+        return "-";
+    }
+
+    return (
+        sayi.toLocaleString(
+            "tr-TR",
+            {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }
+        ) +
+        " USD"
     );
 }
 
@@ -263,11 +288,17 @@ function baslat() {
                 response
             );
 
-             console.log(
-            "HAREM DATA:",
-            JSON.stringify(response.data, null, 2)
-        );
-            
+
+            console.log(
+                "HAREM DATA:",
+                JSON.stringify(
+                    response.data,
+                    null,
+                    2
+                )
+            );
+
+
             if (
                 !response ||
                 !response.data ||
@@ -332,6 +363,34 @@ function baslat() {
                     formatHasAltin(
                         alis
                     );
+            }
+
+
+            if (
+                response.data.ONS
+            ) {
+
+                const ons =
+                    response.data.ONS;
+
+
+                const onsSatis =
+                    Number(
+                        ons.satis
+                    );
+
+
+                if (
+                    onsPrice &&
+                    Number.isFinite(onsSatis)
+                ) {
+
+                    onsPrice.textContent =
+                        formatOns(
+                            onsSatis
+                        );
+                }
+
             }
 
 
