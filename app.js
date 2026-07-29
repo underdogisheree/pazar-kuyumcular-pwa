@@ -1,82 +1,96 @@
 "use strict";
 
 const katsayilar = {
-ayar24: {
-satis: 1.015,
-bozus: 0.995
-},
-ayar22: {
-satis: 0.970,
-bozus: 0.910
-},
-ceyrekZiynet: {
-satis: 1.66,
-bozus: 1.60
-},
-ceyrekCumhuriyet: {
-satis: 1.71,
-bozus: 1.655
-},
-tamZiynet: {
-satis: 6.63,
-bozus: 6.37
-},
-tamCumhuriyet: {
-satis: 6.80,
-bozus: 6.61
-}
+ayar24: { satis: 1.015, bozus: 0.995 },
+ayar22: { satis: 0.970, bozus: 0.910 },
+ceyrekZiynet: { satis: 1.66, bozus: 1.60 },
+ceyrekCumhuriyet: { satis: 1.71, bozus: 1.655 },
+tamZiynet: { satis: 6.63, bozus: 6.37 },
+tamCumhuriyet: { satis: 6.80, bozus: 6.61 }
 };
 
-const connectionStatus = document.getElementById("connectionStatus");
-const updateTime = document.getElementById("updateTime");
-const hasAltinPrice = document.getElementById("hasAltinPrice");
-const hasAltinBozusPrice = document.getElementById("hasAltinBozusPrice");
+const connectionStatus =
+document.getElementById("connectionStatus");
+
+const updateTime =
+document.getElementById("updateTime");
+
+const hasAltinPrice =
+document.getElementById("hasAltinPrice");
+
+const hasAltinBozusPrice =
+document.getElementById("hasAltinBozusPrice");
 
 function durumYaz(mesaj, sinif) {
-if (connectionStatus) {
-connectionStatus.textContent = mesaj;
-connectionStatus.className = "status " + sinif;
+
+```
+if (!connectionStatus) {
+    return;
 }
+
+connectionStatus.textContent = mesaj;
+
+connectionStatus.className =
+    "status " + sinif;
+```
+
 }
 
 function formatTL(deger) {
-const sayi = Number(deger);
 
 ```
+const sayi = Number(deger);
+
 if (!Number.isFinite(sayi)) {
     return "-";
 }
 
-const yuvarlanmis = Math.round(sayi / 10) * 10;
+const yuvarlanmis =
+    Math.round(sayi / 10) * 10;
 
-return yuvarlanmis.toLocaleString("tr-TR") + " TL";
+return (
+    yuvarlanmis.toLocaleString("tr-TR") +
+    " TL"
+);
 ```
 
 }
 
 function formatHasAltin(deger) {
-const sayi = Number(deger);
 
 ```
+const sayi = Number(deger);
+
 if (!Number.isFinite(sayi)) {
     return "-";
 }
 
-return sayi.toLocaleString("tr-TR", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
-}) + " TL";
+return (
+    sayi.toLocaleString(
+        "tr-TR",
+        {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }
+    ) +
+    " TL"
+);
 ```
 
 }
 
 function fiyatYaz(id, deger) {
-const element = document.getElementById(id);
 
 ```
-if (element) {
-    element.textContent = formatTL(deger);
+const element =
+    document.getElementById(id);
+
+if (!element) {
+    return;
 }
+
+element.textContent =
+    formatTL(deger);
 ```
 
 }
@@ -94,6 +108,7 @@ fiyatYaz(
     alis * katsayilar.ayar24.bozus
 );
 
+
 fiyatYaz(
     "ayar22Satis",
     satis * katsayilar.ayar22.satis
@@ -103,6 +118,7 @@ fiyatYaz(
     "ayar22Bozus",
     alis * katsayilar.ayar22.bozus
 );
+
 
 fiyatYaz(
     "ceyrekZiynetSatis",
@@ -114,6 +130,7 @@ fiyatYaz(
     alis * katsayilar.ceyrekZiynet.bozus
 );
 
+
 fiyatYaz(
     "ceyrekCumhuriyetSatis",
     satis * katsayilar.ceyrekCumhuriyet.satis
@@ -124,6 +141,7 @@ fiyatYaz(
     alis * katsayilar.ceyrekCumhuriyet.bozus
 );
 
+
 fiyatYaz(
     "tamZiynetSatis",
     satis * katsayilar.tamZiynet.satis
@@ -133,6 +151,7 @@ fiyatYaz(
     "tamZiynetBozus",
     alis * katsayilar.tamZiynet.bozus
 );
+
 
 fiyatYaz(
     "tamCumhuriyetSatis",
@@ -150,41 +169,53 @@ fiyatYaz(
 function baslat() {
 
 ```
-console.log("Pazar Kuyumcular başlatılıyor.");
+console.log(
+    "Pazar Kuyumcular başlatılıyor..."
+);
+
 
 if (typeof io !== "function") {
 
-    console.error("Socket.IO yüklenmedi.");
+    console.error(
+        "Socket.IO yüklenmedi!"
+    );
 
     durumYaz(
-        "Socket.IO yüklenemedi",
+        "Socket.IO yüklenmedi",
         "error"
     );
 
     return;
 }
 
-console.log("Socket.IO bulundu.");
 
-const socket = io(
-    "https://hrmsocketonly.haremaltin.com",
-    {
-        path: "/socket.io/",
-        transports: [
-            "polling",
-            "websocket"
-        ],
-        reconnection: true,
-        reconnectionAttempts: Infinity,
-        reconnectionDelay: 2000,
-        timeout: 10000
-    }
+console.log(
+    "Socket.IO bulundu."
 );
+
+
+const socket =
+    io(
+        "https://hrmsocketonly.haremaltin.com",
+        {
+            path: "/socket.io/",
+            transports: [
+                "polling",
+                "websocket"
+            ],
+            reconnection: true,
+            reconnectionAttempts: Infinity,
+            reconnectionDelay: 2000,
+            timeout: 10000
+        }
+    );
+
 
 durumYaz(
     "Bağlanıyor...",
     "waiting"
 );
+
 
 socket.on(
     "connect",
@@ -206,6 +237,7 @@ socket.on(
     }
 );
 
+
 socket.on(
     "price_changed",
     function(response) {
@@ -214,6 +246,7 @@ socket.on(
             "FİYAT VERİSİ GELDİ:",
             response
         );
+
 
         if (
             !response ||
@@ -229,14 +262,18 @@ socket.on(
             return;
         }
 
+
         const altin =
             response.data.ALTIN;
+
 
         const satis =
             Number(altin.satis);
 
+
         const alis =
             Number(altin.alis);
+
 
         if (
             !Number.isFinite(satis) ||
@@ -251,11 +288,13 @@ socket.on(
             return;
         }
 
+
         if (hasAltinPrice) {
 
             hasAltinPrice.textContent =
                 formatHasAltin(satis);
         }
+
 
         if (hasAltinBozusPrice) {
 
@@ -263,11 +302,13 @@ socket.on(
                 formatHasAltin(alis);
         }
 
+
         if (updateTime) {
 
             updateTime.textContent =
                 altin.tarih || "-";
         }
+
 
         hesapla(
             satis,
@@ -275,6 +316,7 @@ socket.on(
         );
     }
 );
+
 
 socket.on(
     "disconnect",
@@ -291,6 +333,7 @@ socket.on(
         );
     }
 );
+
 
 socket.on(
     "connect_error",
