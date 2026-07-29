@@ -514,13 +514,13 @@ body {
 
     font-size:
         clamp(
-            14px,
-            3.5vw,
-            19px
+            16px,
+            3.8vw,
+            21px
         );
 
     font-weight:
-        800;
+        900;
 
     white-space:
         nowrap;
