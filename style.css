@@ -888,11 +888,18 @@ footer strong {
 
 
     .buy-price,
-    .sell-price {
+.sell-price {
 
-        font-size:
-            11px;
+    font-size:
+        16px;
 
-    }
+    font-weight:
+        900;
+
+    padding:
+        2px;
+
+    letter-spacing:
+        -0.5px;
 
 }
