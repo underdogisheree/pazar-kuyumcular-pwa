@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_NAME = "pazar-kuyumcular-pwa-v2";
+const CACHE_NAME = "pazar-kuyumcular-pwa-v3";
 
 const FILES_TO_CACHE = [
     "/",
@@ -10,117 +10,163 @@ const FILES_TO_CACHE = [
     "/manifest.json"
 ];
 
+self.addEventListener(
+    "install",
+    event => {
 
-// =====================================================
-// INSTALL
-// =====================================================
+        event.waitUntil(
 
-self.addEventListener("install", event => {
+            caches.open(CACHE_NAME)
+                .then(
+                    cache => {
 
-    event.waitUntil(
+                        return cache.addAll(
+                            FILES_TO_CACHE
+                        );
 
-        caches.open(CACHE_NAME)
-            .then(cache => {
+                    }
+                )
 
-                return cache.addAll(
-                    FILES_TO_CACHE
-                );
+        );
 
-            })
+        self.skipWaiting();
 
-    );
-
-    // Yeni Service Worker'ı bekletmeden aktif et
-    self.skipWaiting();
-
-});
-
-
-// =====================================================
-// ACTIVATE
-// =====================================================
-
-self.addEventListener("activate", event => {
-
-    event.waitUntil(
-
-        caches.keys()
-            .then(keys => {
-
-                return Promise.all(
-
-                    keys
-                        .filter(
-                            key =>
-                                key !== CACHE_NAME
-                        )
-                        .map(
-                            key =>
-                                caches.delete(key)
-                        )
-
-                );
-
-            })
-
-    );
-
-    // Açık sekmelerde yeni Service Worker'ı hemen kullan
-    self.clients.claim();
-
-});
-
-
-// =====================================================
-// FETCH
-// =====================================================
-
-self.addEventListener("fetch", event => {
-
-    // Sadece GET isteklerini cache işle
-    if (event.request.method !== "GET") {
-        return;
     }
+);
 
-    event.respondWith(
 
-        fetch(event.request)
-            .then(response => {
+self.addEventListener(
+    "activate",
+    event => {
 
-                // Başarılı ağ yanıtını cache'e kaydet
-                if (
-                    response &&
-                    response.status === 200 &&
-                    response.type === "basic"
-                ) {
+        event.waitUntil(
 
-                    const responseClone =
-                        response.clone();
+            caches.keys()
+                .then(
+                    keys => {
 
-                    caches.open(CACHE_NAME)
-                        .then(cache => {
+                        return Promise.all(
 
-                            cache.put(
-                                event.request,
-                                responseClone
+                            keys
+                                .filter(
+                                    key =>
+                                        key !== CACHE_NAME
+                                )
+                                .map(
+                                    key =>
+                                        caches.delete(key)
+                                )
+
+                        );
+
+                    }
+                )
+
+        );
+
+        self.clients.claim();
+
+    }
+);
+
+
+self.addEventListener(
+    "fetch",
+    event => {
+
+        const request =
+            event.request;
+
+        const url =
+            new URL(request.url);
+
+
+        if (
+            request.method !== "GET"
+        ) {
+
+            return;
+
+        }
+
+
+        if (
+            url.origin !== self.location.origin
+        ) {
+
+            return;
+
+        }
+
+
+        event.respondWith(
+
+            fetch(request)
+                .then(
+                    response => {
+
+                        if (
+                            response &&
+                            response.ok
+                        ) {
+
+                            const responseClone =
+                                response.clone();
+
+                            caches.open(
+                                CACHE_NAME
+                            )
+                            .then(
+                                cache => {
+
+                                    cache.put(
+                                        request,
+                                        responseClone
+                                    );
+
+                                }
                             );
 
-                        });
+                        }
 
-                }
+                        return response;
 
-                return response;
+                    }
+                )
+                .catch(
+                    () => {
 
-            })
-            .catch(() => {
+                        return caches.match(
+                            request
+                        )
+                        .then(
+                            cachedResponse => {
 
-                // İnternet yoksa cache'deki sürümü kullan
-                return caches.match(
-                    event.request
-                );
+                                if (
+                                    cachedResponse
+                                ) {
 
-            })
+                                    return cachedResponse;
 
-    );
+                                }
 
-});
+
+                                return new Response(
+                                    "Offline",
+                                    {
+                                        status: 503,
+                                        statusText:
+                                            "Service Unavailable"
+                                    }
+                                );
+
+                            }
+                        );
+
+                    }
+                )
+
+        );
+
+    }
+);
