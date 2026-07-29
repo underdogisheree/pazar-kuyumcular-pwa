@@ -1,204 +1,261 @@
 "use strict";
 
+// =====================================================
+// KATSAYILAR
+// =====================================================
+
 const katsayilar = {
 ayar24: {
 satis: 1.015,
 bozus: 0.995
 },
+
+```
 ayar22: {
-satis: 0.970,
-bozus: 0.910
+    satis: 0.970,
+    bozus: 0.910
 },
+
 ceyrekZiynet: {
-satis: 1.66,
-bozus: 1.60
+    satis: 1.66,
+    bozus: 1.60
 },
+
 ceyrekCumhuriyet: {
-satis: 1.71,
-bozus: 1.655
+    satis: 1.71,
+    bozus: 1.655
 },
+
 tamZiynet: {
-satis: 6.63,
-bozus: 6.37
+    satis: 6.63,
+    bozus: 6.37
 },
+
 tamCumhuriyet: {
-satis: 6.80,
-bozus: 6.61
+    satis: 6.80,
+    bozus: 6.61
 }
+```
+
 };
 
+// =====================================================
 // HTML ELEMANLARI
+// =====================================================
 
-const connectionStatus =
-document.getElementById("connectionStatus");
+const connectionStatus = document.getElementById(
+"connectionStatus"
+);
 
-const updateTime =
-document.getElementById("updateTime");
+const updateTime = document.getElementById(
+"updateTime"
+);
 
-const hasAltinPrice =
-document.getElementById("hasAltinPrice");
+const hasAltinPrice = document.getElementById(
+"hasAltinPrice"
+);
 
-const hasAltinBozusPrice =
-document.getElementById("hasAltinBozusPrice");
+const hasAltinBozusPrice = document.getElementById(
+"hasAltinBozusPrice"
+);
 
+// =====================================================
 // BAĞLANTI DURUMU
+// =====================================================
 
-function setConnectionStatus(text, className) {
-
-```
+function baglantiDurumu(
+mesaj,
+sinif
+) {
 if (!connectionStatus) {
-    return;
+return;
 }
 
-connectionStatus.textContent = text;
-connectionStatus.className = "status " + className;
+```
+connectionStatus.textContent = mesaj;
+
+connectionStatus.className =
+    "status " + sinif;
 ```
 
 }
 
-// ÜRÜN FİYATINI FORMATLA
+// =====================================================
+// FİYAT FORMATLAMA
+// =====================================================
 
-function formatTL(value) {
+function formatTL(deger) {
 
 ```
-const number = Number(value);
+const sayi = Number(deger);
 
-if (!Number.isFinite(number)) {
+if (!Number.isFinite(sayi)) {
     return "-";
 }
 
-const roundedValue =
-    Math.round(number / 10) * 10;
+const yuvarlanmis =
+    Math.round(sayi / 10) * 10;
 
-return roundedValue.toLocaleString("tr-TR") + " TL";
+return (
+    yuvarlanmis.toLocaleString(
+        "tr-TR"
+    ) + " TL"
+);
 ```
 
 }
 
-// HAS ALTIN FİYATINI FORMATLA
+// =====================================================
+// HAS ALTIN FORMATLAMA
+// =====================================================
 
-function formatHasAltinTL(value) {
+function formatHasAltinTL(deger) {
 
 ```
-const number = Number(value);
+const sayi = Number(deger);
 
-if (!Number.isFinite(number)) {
+if (!Number.isFinite(sayi)) {
     return "-";
 }
 
-return number.toLocaleString(
-    "tr-TR",
-    {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-    }
-) + " TL";
+return (
+    sayi.toLocaleString(
+        "tr-TR",
+        {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }
+    ) + " TL"
+);
 ```
 
 }
 
-// FİYAT GÖSTER
+// =====================================================
+// FİYATI HTML'E YAZ
+// =====================================================
 
-function setPrice(id, value) {
+function fiyatYaz(
+elementId,
+deger
+) {
 
 ```
 const element =
-    document.getElementById(id);
+    document.getElementById(
+        elementId
+    );
 
 if (!element) {
+
     console.warn(
-        "HTML elemanı bulunamadı:",
-        id
+        "HTML elementi bulunamadı:",
+        elementId
     );
+
     return;
 }
 
 element.textContent =
-    formatTL(value);
+    formatTL(deger);
 ```
 
 }
 
-// FİYATLARI HESAPLA
+// =====================================================
+// TÜM FİYATLARI HESAPLA
+// =====================================================
 
-function hesapla(
+function fiyatlariHesapla(
 hasAltinSatis,
 hasAltinBozus
 ) {
 
 ```
-setPrice(
+// 24 AYAR
+
+fiyatYaz(
     "ayar24Satis",
     hasAltinSatis *
     katsayilar.ayar24.satis
 );
 
-setPrice(
+fiyatYaz(
     "ayar24Bozus",
     hasAltinBozus *
     katsayilar.ayar24.bozus
 );
 
 
-setPrice(
+// 22 AYAR
+
+fiyatYaz(
     "ayar22Satis",
     hasAltinSatis *
     katsayilar.ayar22.satis
 );
 
-setPrice(
+fiyatYaz(
     "ayar22Bozus",
     hasAltinBozus *
     katsayilar.ayar22.bozus
 );
 
 
-setPrice(
+// ZİYNET ÇEYREK
+
+fiyatYaz(
     "ceyrekZiynetSatis",
     hasAltinSatis *
     katsayilar.ceyrekZiynet.satis
 );
 
-setPrice(
+fiyatYaz(
     "ceyrekZiynetBozus",
     hasAltinBozus *
     katsayilar.ceyrekZiynet.bozus
 );
 
 
-setPrice(
+// ATA ÇEYREK
+
+fiyatYaz(
     "ceyrekCumhuriyetSatis",
     hasAltinSatis *
     katsayilar.ceyrekCumhuriyet.satis
 );
 
-setPrice(
+fiyatYaz(
     "ceyrekCumhuriyetBozus",
     hasAltinBozus *
     katsayilar.ceyrekCumhuriyet.bozus
 );
 
 
-setPrice(
+// TAM ZİYNET
+
+fiyatYaz(
     "tamZiynetSatis",
     hasAltinSatis *
     katsayilar.tamZiynet.satis
 );
 
-setPrice(
+fiyatYaz(
     "tamZiynetBozus",
     hasAltinBozus *
     katsayilar.tamZiynet.bozus
 );
 
 
-setPrice(
+// ATA TAM
+
+fiyatYaz(
     "tamCumhuriyetSatis",
     hasAltinSatis *
     katsayilar.tamCumhuriyet.satis
 );
 
-setPrice(
+fiyatYaz(
     "tamCumhuriyetBozus",
     hasAltinBozus *
     katsayilar.tamCumhuriyet.bozus
@@ -207,25 +264,47 @@ setPrice(
 
 }
 
-// SOCKET.IO KONTROLÜ
+// =====================================================
+// UYGULAMA BAŞLAT
+// =====================================================
 
-if (typeof io !== "function") {
+function uygulamayiBaslat() {
 
 ```
-console.error(
-    "Socket.IO yüklenemedi."
+console.log(
+    "Pazar Kuyumcular uygulaması başlatılıyor..."
 );
 
-setConnectionStatus(
-    "Socket.IO yüklenemedi",
-    "error"
+
+// Socket.IO yüklenmiş mi?
+
+if (
+    typeof window.io !== "function"
+) {
+
+    console.error(
+        "Socket.IO bulunamadı."
+    );
+
+    baglantiDurumu(
+        "Socket.IO yüklenemedi",
+        "error"
+    );
+
+    return;
+}
+
+
+console.log(
+    "Socket.IO hazır."
 );
-```
 
-} else {
 
-```
-const socket = io(
+// =================================================
+// SOCKET.IO BAĞLANTISI
+// =================================================
+
+const socket = window.io(
     "https://hrmsocketonly.haremaltin.com",
     {
         path: "/socket.io/",
@@ -236,26 +315,31 @@ const socket = io(
         reconnection: true,
         reconnectionAttempts: Infinity,
         reconnectionDelay: 2000,
-        reconnectionDelayMax: 10000,
         timeout: 10000
     }
 );
 
 
-setConnectionStatus(
+baglantiDurumu(
     "Bağlanıyor...",
     "waiting"
 );
 
 
-// BAĞLANTI BAŞARILI
+// =================================================
+// BAĞLANDI
+// =================================================
 
 socket.on(
     "connect",
     function () {
 
         console.log(
-            "HAREM ALTIN SOCKET.IO BAĞLANTISI BAŞARILI"
+            "================================="
+        );
+
+        console.log(
+            "HAREM ALTIN BAĞLANTISI BAŞARILI"
         );
 
         console.log(
@@ -264,11 +348,10 @@ socket.on(
         );
 
         console.log(
-            "Transport:",
-            socket.io.engine.transport.name
+            "================================="
         );
 
-        setConnectionStatus(
+        baglantiDurumu(
             "Bağlandı",
             "connected"
         );
@@ -276,14 +359,16 @@ socket.on(
 );
 
 
-// FİYAT VERİSİ
+// =================================================
+// FİYAT DEĞİŞTİ
+// =================================================
 
 socket.on(
     "price_changed",
     function (response) {
 
         console.log(
-            "HAREM ALTIN FİYAT VERİSİ:",
+            "Fiyat verisi geldi:",
             response
         );
 
@@ -295,8 +380,7 @@ socket.on(
         ) {
 
             console.warn(
-                "Gelen veride ALTIN bilgisi bulunamadı:",
-                response
+                "ALTIN verisi bulunamadı."
             );
 
             return;
@@ -307,51 +391,55 @@ socket.on(
             response.data.ALTIN;
 
 
-        const hasAltinSatis =
-            Number(altin.satis);
+        const satis =
+            Number(
+                altin.satis
+            );
 
-        const hasAltinBozus =
-            Number(altin.alis);
+
+        const alis =
+            Number(
+                altin.alis
+            );
 
 
         if (
-            !Number.isFinite(
-                hasAltinSatis
-            ) ||
-            !Number.isFinite(
-                hasAltinBozus
-            )
+            !Number.isFinite(satis) ||
+            !Number.isFinite(alis)
         ) {
 
             console.error(
-                "Geçersiz Has Altın fiyatı:",
-                {
-                    satis: altin.satis,
-                    alis: altin.alis
-                }
+                "Geçersiz fiyat verisi:",
+                altin
             );
 
             return;
         }
 
 
+        // HAS ALTIN SATIŞ
+
         if (hasAltinPrice) {
 
             hasAltinPrice.textContent =
                 formatHasAltinTL(
-                    hasAltinSatis
+                    satis
                 );
         }
 
+
+        // HAS ALTIN ALIŞ
 
         if (hasAltinBozusPrice) {
 
             hasAltinBozusPrice.textContent =
                 formatHasAltinTL(
-                    hasAltinBozus
+                    alis
                 );
         }
 
+
+        // SON GÜNCELLEME
 
         if (updateTime) {
 
@@ -360,43 +448,30 @@ socket.on(
         }
 
 
-        hesapla(
-            hasAltinSatis,
-            hasAltinBozus
+        // ÜRÜN FİYATLARI
+
+        fiyatlariHesapla(
+            satis,
+            alis
         );
     }
 );
 
 
-// TÜM SOCKET EVENTLERİNİ KONSOLA YAZ
-
-socket.onAny(
-    function (
-        eventName,
-        ...args
-    ) {
-
-        console.log(
-            "[SOCKET EVENT]",
-            eventName,
-            args
-        );
-    }
-);
-
-
+// =================================================
 // BAĞLANTI KESİLDİ
+// =================================================
 
 socket.on(
     "disconnect",
     function (reason) {
 
         console.warn(
-            "Socket.IO bağlantısı kesildi:",
+            "Bağlantı kesildi:",
             reason
         );
 
-        setConnectionStatus(
+        baglantiDurumu(
             "Bağlantı kesildi",
             "error"
         );
@@ -404,72 +479,27 @@ socket.on(
 );
 
 
+// =================================================
 // BAĞLANTI HATASI
+// =================================================
 
 socket.on(
     "connect_error",
     function (error) {
 
         console.error(
-            "HAREM ALTIN SOCKET.IO BAĞLANTI HATASI"
+            "SOCKET.IO BAĞLANTI HATASI:",
+            error
         );
 
         console.error(
-            "Mesaj:",
+            "Hata mesajı:",
             error.message
         );
 
-        console.error(
-            "Açıklama:",
-            error.description
-        );
-
-        console.error(
-            "Context:",
-            error.context
-        );
-
-        setConnectionStatus(
+        baglantiDurumu(
             "Bağlantı hatası",
             "error"
-        );
-    }
-);
-
-
-// YENİDEN BAĞLANMA
-
-socket.io.on(
-    "reconnect_attempt",
-    function (attempt) {
-
-        console.warn(
-            "Yeniden bağlanılıyor:",
-            attempt
-        );
-
-        setConnectionStatus(
-            "Yeniden bağlanıyor...",
-            "waiting"
-        );
-    }
-);
-
-
-// YENİDEN BAĞLANDI
-
-socket.io.on(
-    "reconnect",
-    function (attempt) {
-
-        console.log(
-            "Socket.IO yeniden bağlandı:",
-            attempt
-        );
-
-        setConnectionStatus(
-            "Bağlandı",
-            "connected"
         );
     }
 );
@@ -477,37 +507,25 @@ socket.io.on(
 
 }
 
-// SERVICE WORKER
+// =====================================================
+// SAYFA YÜKLENDİKTEN SONRA BAŞLAT
+// =====================================================
 
-if ("serviceWorker" in navigator) {
+if (
+document.readyState === "loading"
+) {
 
 ```
-window.addEventListener(
-    "load",
-    function () {
-
-        navigator.serviceWorker
-            .register("sw.js")
-            .then(
-                function (registration) {
-
-                    console.log(
-                        "Service Worker aktif:",
-                        registration.scope
-                    );
-                }
-            )
-            .catch(
-                function (error) {
-
-                    console.error(
-                        "Service Worker kayıt hatası:",
-                        error
-                    );
-                }
-            );
-    }
+document.addEventListener(
+    "DOMContentLoaded",
+    uygulamayiBaslat
 );
+```
+
+} else {
+
+```
+uygulamayiBaslat();
 ```
 
 }
