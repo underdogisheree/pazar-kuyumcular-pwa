@@ -1,9 +1,5 @@
 name = "pazar-kuyumcular-pwa"
-
 main = "worker/index.js"
-
 compatibility_date = "2026-07-29"
 
-[assets]
-directory = "."
-binding = "ASSETS"
+workers_dev = true
