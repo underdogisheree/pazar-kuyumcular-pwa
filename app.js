@@ -360,20 +360,16 @@ socket.on(
 }
 
 if (
-document.readyState === "loading"
+    document.readyState === "loading"
 ) {
 
-```
-document.addEventListener(
-    "DOMContentLoaded",
-    baslat
-);
-```
+    document.addEventListener(
+        "DOMContentLoaded",
+        baslat
+    );
 
 } else {
 
-```
-baslat();
-```
+    baslat();
 
 }
