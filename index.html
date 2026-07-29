@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
+
     <meta charset="UTF-8">
 
     <meta
@@ -8,86 +10,149 @@
         content="width=device-width, initial-scale=1.0, viewport-fit=cover"
     >
 
-    <meta name="theme-color" content="#111827">
+    <meta
+        name="theme-color"
+        content="#ef6c2f"
+    >
 
     <meta
         name="description"
-        content=" canlı fiyat hesaplama uygulaması"
+        content="Pazar Kuyumcular canlı altın fiyat hesaplama uygulaması"
     >
 
     <link rel="manifest" href="manifest.json">
-    <link rel="stylesheet" href="style.css">
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
 
     <title>Pazar Kuyumcular</title>
+
 </head>
+
 
 <body>
 
     <main class="container">
 
+
+        <!-- ================================================= -->
+        <!-- BAŞLIK -->
+        <!-- ================================================= -->
+
         <header class="header">
-            <h1>Pazar Kuyumcular</h1>
-            <p>Canlı Altın Fiyat Hesaplama</p>
+
+            <h1>
+                PAZAR KUYUMCULAR
+            </h1>
+
+            <p>
+                CANLI ALTIN FİYATLARI
+            </p>
+
         </header>
 
 
-        <section class="status-card">
-
-            <div class="status-row">
-                <span>Bağlantı</span>
-
-                <span id="connectionStatus" class="status waiting">
-                    Bağlanıyor...
-                </span>
-            </div>
-
-            <div class="status-row">
-                <span>Son Güncelleme</span>
-
-                <span id="updateTime">
-                    -
-                </span>
-            </div>
-
-        </section>
-
+        <!-- ================================================= -->
+        <!-- HAS ALTIN -->
+        <!-- ================================================= -->
 
         <section class="has-altin-card">
 
-            <div class="has-title">
-                Has Altın Satış Fiyatı
+            <div class="has-altin-title">
+                HAS ALTIN
             </div>
 
-            <div id="hasAltinPrice" class="has-price">
-                -
-            </div>
 
-            <div class="currency">
-                TL
+            <div class="has-altin-prices">
+
+
+                <!-- HAS ALTIN ALIŞ -->
+
+                <div class="has-price-box">
+
+                    <span class="has-price-label">
+                        ALIŞ
+                    </span>
+
+                    <strong
+                        id="hasAltinBozusPrice"
+                        class="has-price"
+                    >
+                        -
+                    </strong>
+
+                </div>
+
+
+                <!-- HAS ALTIN SATIŞ -->
+
+                <div class="has-price-box">
+
+                    <span class="has-price-label">
+                        SATIŞ
+                    </span>
+
+                    <strong
+                        id="hasAltinPrice"
+                        class="has-price"
+                    >
+                        -
+                    </strong>
+
+                </div>
+
+
             </div>
 
         </section>
 
 
-        <section class="products">
+        <!-- ================================================= -->
+        <!-- FİYAT TABLOSU -->
+        <!-- ================================================= -->
 
-            <h2>Altın Fiyatları</h2>
+        <section class="price-section">
+
+
+            <div class="table-header">
+
+                <div>
+                    ÜRÜN
+                </div>
+
+                <div>
+                    ALIŞ
+                </div>
+
+                <div>
+                    SATIŞ
+                </div>
+
+            </div>
 
 
             <!-- 24 AYAR -->
 
-            <div class="product-card">
+            <div class="price-row">
 
-                <h3>24 Ayar</h3>
-
-                <div class="price-row">
-                    <span>Satış Fiyatı</span>
-                    <strong id="ayar24Satis">-</strong>
+                <div class="product-name">
+                    24 AYAR
                 </div>
 
-                <div class="price-row">
-                    <span>Bozuş Fiyatı</span>
-                    <strong id="ayar24Bozus">-</strong>
+                <div
+                    id="ayar24Bozus"
+                    class="buy-price"
+                >
+                    -
+                </div>
+
+                <div
+                    id="ayar24Satis"
+                    class="sell-price"
+                >
+                    -
                 </div>
 
             </div>
@@ -95,56 +160,74 @@
 
             <!-- 22 AYAR -->
 
-            <div class="product-card">
+            <div class="price-row">
 
-                <h3>22 Ayar</h3>
-
-                <div class="price-row">
-                    <span>Satış Fiyatı</span>
-                    <strong id="ayar22Satis">-</strong>
+                <div class="product-name">
+                    22 AYAR
                 </div>
 
-                <div class="price-row">
-                    <span>Bozuş Fiyatı</span>
-                    <strong id="ayar22Bozus">-</strong>
+                <div
+                    id="ayar22Bozus"
+                    class="buy-price"
+                >
+                    -
                 </div>
 
-            </div>
-
-
-            <!-- ÇEYREK ZİYNET -->
-
-            <div class="product-card">
-
-                <h3>Çeyrek Ziynet</h3>
-
-                <div class="price-row">
-                    <span>Satış Fiyatı</span>
-                    <strong id="ceyrekZiynetSatis">-</strong>
-                </div>
-
-                <div class="price-row">
-                    <span>Bozuş Fiyatı</span>
-                    <strong id="ceyrekZiynetBozus">-</strong>
+                <div
+                    id="ayar22Satis"
+                    class="sell-price"
+                >
+                    -
                 </div>
 
             </div>
 
 
-            <!-- ÇEYREK CUMHURİYET -->
+            <!-- ATA TAM -->
 
-            <div class="product-card">
+            <div class="price-row">
 
-                <h3>Çeyrek Cumhuriyet</h3>
-
-                <div class="price-row">
-                    <span>Satış Fiyatı</span>
-                    <strong id="ceyrekCumhuriyetSatis">-</strong>
+                <div class="product-name">
+                    ATA TAM
                 </div>
 
-                <div class="price-row">
-                    <span>Bozuş Fiyatı</span>
-                    <strong id="ceyrekCumhuriyetBozus">-</strong>
+                <div
+                    id="tamCumhuriyetBozus"
+                    class="buy-price"
+                >
+                    -
+                </div>
+
+                <div
+                    id="tamCumhuriyetSatis"
+                    class="sell-price"
+                >
+                    -
+                </div>
+
+            </div>
+
+
+            <!-- ATA ÇEYREK -->
+
+            <div class="price-row">
+
+                <div class="product-name">
+                    ATA ÇEYREK
+                </div>
+
+                <div
+                    id="ceyrekCumhuriyetBozus"
+                    class="buy-price"
+                >
+                    -
+                </div>
+
+                <div
+                    id="ceyrekCumhuriyetSatis"
+                    class="sell-price"
+                >
+                    -
                 </div>
 
             </div>
@@ -152,58 +235,126 @@
 
             <!-- TAM ZİYNET -->
 
-            <div class="product-card">
+            <div class="price-row">
 
-                <h3>Tam Ziynet</h3>
-
-                <div class="price-row">
-                    <span>Satış Fiyatı</span>
-                    <strong id="tamZiynetSatis">-</strong>
+                <div class="product-name">
+                    TAM ZİYNET
                 </div>
 
-                <div class="price-row">
-                    <span>Bozuş Fiyatı</span>
-                    <strong id="tamZiynetBozus">-</strong>
+                <div
+                    id="tamZiynetBozus"
+                    class="buy-price"
+                >
+                    -
+                </div>
+
+                <div
+                    id="tamZiynetSatis"
+                    class="sell-price"
+                >
+                    -
+                </div>
+
+            </div>
+
+
+            <!-- ZİYNET ÇEYREK -->
+
+            <div class="price-row">
+
+                <div class="product-name">
+                    ZİYNET ÇEYREK
+                </div>
+
+                <div
+                    id="ceyrekZiynetBozus"
+                    class="buy-price"
+                >
+                    -
+                </div>
+
+                <div
+                    id="ceyrekZiynetSatis"
+                    class="sell-price"
+                >
+                    -
                 </div>
 
             </div>
 
-
-            <!-- TAM CUMHURİYET -->
-
-            <div class="product-card">
-
-                <h3>Tam Cumhuriyet</h3>
-
-                <div class="price-row">
-                    <span>Satış Fiyatı</span>
-                    <strong id="tamCumhuriyetSatis">-</strong>
-                </div>
-
-                <div class="price-row">
-                    <span>Bozuş Fiyatı</span>
-                    <strong id="tamCumhuriyetBozus">-</strong>
-                </div>
-
-            </div>
 
         </section>
 
 
+        <!-- ================================================= -->
+        <!-- DURUM -->
+        <!-- ================================================= -->
+
+        <section class="status-card">
+
+
+            <div class="status-row">
+
+                <span>
+                    BAĞLANTI
+                </span>
+
+                <span
+                    id="connectionStatus"
+                    class="status waiting"
+                >
+                    Bağlanıyor...
+                </span>
+
+            </div>
+
+
+            <div class="status-row">
+
+                <span>
+                    SON GÜNCELLEME
+                </span>
+
+                <span id="updateTime">
+                    -
+                </span>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- ALT BİLGİ -->
+        <!-- ================================================= -->
+
         <footer>
-            Canlı Fiyat Verisi
+
+            <strong>
+                Hayırlı işler, bol kazançlar...
+            </strong>
+
         </footer>
+
 
     </main>
 
 
-    <!-- Socket.IO -->
+    <!-- ================================================= -->
+    <!-- SOCKET.IO -->
+    <!-- ================================================= -->
 
     <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
 
-    <!-- Uygulama -->
+
+    <!-- ================================================= -->
+    <!-- UYGULAMA -->
+    <!-- ================================================= -->
 
     <script src="app.js"></script>
 
+
 </body>
+
 </html>
