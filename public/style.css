@@ -607,3 +607,16 @@ footer strong {
         letter-spacing: -0.5px;
     }
 }
+footer-note {
+    display: block;
+
+    margin-top: 6px;
+
+    color: var(--gri);
+
+    font-size: 12px;
+
+    font-style: normal;
+
+    font-weight: 600;
+}
