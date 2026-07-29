@@ -8,7 +8,7 @@
 const socket = io(
     "https://hrmsocketonly.haremaltin.com",
     {
-        transports: ["websocket"],
+        transports: ["polling", "websocket"],
         path: "/socket.io/"
     }
 );
